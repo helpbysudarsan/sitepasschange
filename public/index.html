@@ -36,7 +36,6 @@
         /* =========================================
            CYBER BACKGROUND EFFECTS
            ========================================= */
-        /* Holographic Grid */
         .cyber-grid {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
             background-image: 
@@ -45,7 +44,6 @@
             background-size: 40px 40px;
         }
 
-        /* Vertical Scanner Line */
         .scanner-line {
             position: fixed; top: -10%; left: 0; width: 100vw; height: 3px;
             background: var(--neon-cyan);
@@ -58,7 +56,6 @@
             100% { top: 110%; }
         }
 
-        /* Ambient Glowing Orbs */
         .orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: -2; opacity: 0.3; }
         .orb-1 { width: 350px; height: 350px; background: var(--neon-cyan); top: 5%; left: 10%; animation: float 8s ease-in-out infinite alternate; }
         .orb-2 { width: 300px; height: 300px; background: var(--neon-magenta); bottom: 5%; right: 10%; animation: float 10s ease-in-out infinite alternate-reverse; }
@@ -84,13 +81,11 @@
             overflow: hidden;
         }
         
-        /* Top Glowing Edge */
         .panel::before {
             content: ''; position: absolute; top: 0; left: 10%; width: 80%; height: 2px;
             background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
         }
 
-        /* Clean, Normal Text Settings */
         h2 { 
             color: #ffffff; 
             text-shadow: 0 0 8px var(--neon-cyan); 
@@ -139,21 +134,18 @@
         button[type="submit"]:active { transform: translateY(1px); }
         button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
 
-        /* Status Messages */
         .status-msg { margin-top: 15px; font-weight: bold; padding: 12px; border-radius: 8px; text-align: center; font-size: 0.9rem; }
         .msg-error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #fca5a5; text-shadow: 0 0 4px rgba(239,68,68,0.4); }
         .hidden { display: none !important; }
         .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s linear infinite; margin-left: 8px; vertical-align: middle; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* SweetAlert Cyber Theme Override */
         .swal2-popup { background: #0f172a !important; color: #f8fafc !important; border: 1px solid #00f0ff; box-shadow: 0 0 20px rgba(0,240,255,0.2) !important; border-radius: 16px !important; }
         .swal2-title { color: #00f0ff !important; text-shadow: 0 0 8px rgba(0,240,255,0.5); }
     </style>
 </head>
 <body>
 
-<!-- CYBER BACKGROUND ELEMENTS -->
 <div class="cyber-grid"></div>
 <div class="scanner-line"></div>
 <div class="orb orb-1"></div>
@@ -181,16 +173,13 @@
 </div>
 
 <script>
-    // 1. Initialize Firebase (আপনার প্রোজেক্টের ডিটেইলস)
     const firebaseConfig = {
       apiKey: "AIzaSyAvtM_LmkN4oXlQ7_wojG8CunUuw6lbt7Y",
       authDomain: "iia-fest.firebaseapp.com",
-      databaseURL: "https://iia-fest-default-rtdb.firebaseio.com",
       projectId: "iia-fest",
       storageBucket: "iia-fest.firebasestorage.app",
       messagingSenderId: "111712260847",
-      appId: "1:111712260847:web:667572c9309a011b02811a",
-      measurementId: "G-M1SHTJ5LF1"
+      appId: "1:111712260847:web:667572c9309a011b02811a"
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
@@ -202,7 +191,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-        // 2. URL থেকে সিক্রেট কোড (oobCode) বের করা
         const urlParams = new URLSearchParams(window.location.search);
         const actionCode = urlParams.get('oobCode');
 
@@ -213,7 +201,6 @@
             return;
         }
 
-        // 3. কোডটি ভেরিফাই করে ইমেইল দেখানো
         auth.verifyPasswordResetCode(actionCode).then((email) => {
             document.getElementById('userEmailDisplay').innerHTML = `Authorized for:<br> <span style="color:#00f0ff; font-weight:bold;">${email}</span>`;
         }).catch((error) => {
@@ -222,7 +209,6 @@
             document.getElementById('userEmailDisplay').innerText = "Link Expired.";
         });
 
-        // 4. ফর্ম সাবমিট ও পাসওয়ার্ড আপডেট লজিক
         document.getElementById('formResetPass').addEventListener('submit', (e) => {
             e.preventDefault();
             const p1 = document.getElementById('newPass').value;
