@@ -3,195 +3,1493 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Cyber Reset - IIA Fest</title>
+    <title>TEACHERS DAY 2K26 Ticketing</title>
+    
+    <!-- PWA Setup: Inline Manifest & Theme Color -->
+    <meta name="theme-color" content="#0f172a">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/10435/10435193.png">
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiSUlBIFRlYWNoZXJzIERheSAySzI2Iiwic2hvcnRfbmFtZSI6IklJQSBGZXN0Iiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiNmOGZhZmMiLCJ0aGVtZV9jb2xvciI6IiMwZjE3MmEiLCJpY29ucyI6W3sic3JjIjoiaHR0cHM6Ly9jZG4taWNvbnMtcG5nLmZsYXRpY29uLmNvbS81MTIvMTA0MzUvMTA0MzUxOTMucG5nIiwic2l6ZXMiOiIxOTJ4MTkyIiwidHlwZSI6ImltYWdlL3BuZyJ9LHsic3JjIjoiaHR0cHM6Ly9jZG4taWNvbnMtcG5nLmZsYXRpY29uLmNvbS81MTIvMTA0MzUvMTA0MzUxOTMucG5nIiwic2l6ZXMiOiI1MTJ4NTEyIiwidHlwZSI6ImltYWdlL3BuZyJ9XX0=">
 
-    <!-- SweetAlert2 & Firebase Libraries -->
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    
+    <!-- SweetAlert2 Library for Modern Popups -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- CryptoJS Library for Secure Password Hashing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <!-- Firebase Cloud Libraries -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         /* =========================================
-           CYBER THEME VARIABLES
+           1. CORE VARIABLES & THEMES
            ========================================= */
         :root {
-            --neon-cyan: #00f0ff;
-            --neon-magenta: #d900ff;
-            --dark-bg: #050510;
-            --panel-bg: rgba(10, 15, 30, 0.75);
+            --bg-color: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --visitor-color: #0284c7; 
+            --staff-color: #059669;   
+            --admin-color: #7c3aed;   
+            --success: #10b981;
+            --danger: #ef4444;
+            --border-color: #e2e8f0;
+            --input-bg: #ffffff;
+            --input-border: #cbd5e1;
+        }
+
+        body.dark-mode {
+            --bg-color: #030712; 
+            --card-bg: rgba(15, 23, 42, 0.75); 
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
-            --input-bg: rgba(0, 0, 0, 0.6);
-            --input-border: #1e293b;
+            --visitor-color: #00f0ff; 
+            --staff-color: #00ff66;   
+            --admin-color: #d900ff;   
+            --border-color: #1e293b;
+            --input-bg: #0f172a;
+            --input-border: #334155;
         }
 
+        /* =========================================
+           1.5 CUSTOM SCROLLBAR
+           ========================================= */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(100, 116, 139, 0.8); }
+        
+        body.dark-mode ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.3); }
+        body.dark-mode ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.6); }
+
+        /* =========================================
+           2. GLOBAL STRUCTURE & MOBILE LAYOUT
+           ========================================= */
+        * { box-sizing: border-box; -webkit-user-select: none; -ms-user-select: none; user-select: none; }
+        input, select { -webkit-user-select: auto; -ms-user-select: auto; user-select: auto; }
+        
+        /* Fix for bulk action checkboxes */
+        input[type="checkbox"] {
+            width: 18px !important; height: 18px !important; margin: 0 !important;
+            display: inline-block; cursor: pointer; accent-color: var(--visitor-color);
+        }
+        
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
-            background-color: var(--dark-bg); 
-            margin: 0; padding: 15px; 
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 100vh; color: var(--text-main); position: relative; overflow-x: hidden;
+            background-color: transparent; margin: 0; padding: 15px; 
+            display: flex; flex-direction: column; align-items: center; padding-top: 12vh;
+            min-height: 100vh; color: var(--text-main); transition: color 0.4s; 
+            position: relative; overflow-x: hidden;
         }
+
+        .container { width: 100%; max-width: 500px; padding: 10px; position: relative; z-index: 2; flex-grow: 1; }
+
+        .view-section { display: none; animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .view-section.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* =========================================
-           CYBER BACKGROUND EFFECTS
+           3. ADVANCED HACKER & LIGHT SOURCE BACKGROUND
            ========================================= */
-        /* Holographic Grid */
-        .cyber-grid {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3;
-            background-image: 
-                linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
+        #hacker-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; overflow: hidden; pointer-events: none;
+            background: linear-gradient(135deg, #e2e8f0, #f8fafc);
+            transition: background 0.8s ease;
         }
+        body.dark-mode #hacker-bg { background: radial-gradient(circle at 50% 50%, #030712, #000000); }
 
-        /* Vertical Scanner Line */
-        .scanner-line {
-            position: fixed; top: -10%; left: 0; width: 100vw; height: 3px;
-            background: var(--neon-cyan);
-            box-shadow: 0 0 15px 2px var(--neon-cyan);
-            z-index: -1; opacity: 0.5;
-            animation: scan 6s linear infinite;
-        }
-        @keyframes scan {
-            0% { top: -10%; }
-            100% { top: 110%; }
-        }
+        .light-source { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.15; z-index: -2; transition: all 1s ease; }
+        .light-1 { width: 400px; height: 400px; background: var(--visitor-color); top: -10%; left: -10%; animation: driftLight 15s ease infinite alternate; }
+        .light-2 { width: 500px; height: 500px; background: var(--admin-color); bottom: -15%; right: -10%; animation: driftLight 20s ease infinite alternate-reverse; }
+        .light-3 { width: 300px; height: 300px; background: var(--staff-color); top: 40%; left: 30%; animation: driftLight 18s ease infinite; }
 
-        /* Ambient Glowing Orbs */
-        .orb { position: absolute; border-radius: 50%; filter: blur(90px); z-index: -2; opacity: 0.3; }
-        .orb-1 { width: 350px; height: 350px; background: var(--neon-cyan); top: 5%; left: 10%; animation: float 8s ease-in-out infinite alternate; }
-        .orb-2 { width: 300px; height: 300px; background: var(--neon-magenta); bottom: 5%; right: 10%; animation: float 10s ease-in-out infinite alternate-reverse; }
-
-        @keyframes float {
+        @keyframes driftLight {
             0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, 40px) scale(1.1); }
+            50% { transform: translate(50px, 80px) scale(1.2); }
+            100% { transform: translate(-40px, -60px) scale(0.9); }
+        }
+
+        /* ---- FALLING APPLE & WINDOWS LOGOS (Top to Bottom) ---- */
+        .falling-logo {
+            position: absolute; top: -200px;
+            animation: fallDown var(--duration) linear infinite;
+            animation-delay: var(--delay);
+            filter: blur(var(--blur));
+            opacity: 0;
+            transition: all 1s ease;
+        }
+        .falling-logo svg {
+            width: 100%; height: 100%;
+            fill: rgba(0,0,0,0.03);
+            transition: all 1s ease;
+        }
+        body.dark-mode .falling-logo svg {
+            fill: transparent; stroke: var(--neon-color); stroke-width: 15px; 
+            filter: drop-shadow(0 0 15px var(--neon-glow)) drop-shadow(0 0 30px var(--neon-glow));
+        }
+
+        @keyframes fallDown {
+            0% { transform: translateY(0) scale(var(--scale)) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(130vh) scale(var(--scale)) rotate(var(--rot)); opacity: 0; }
+        }
+
+        /* ---- VERTICAL HACKER DATA STREAMS (Bottom to Top) ---- */
+        .data-stream {
+            position: absolute; bottom: -100px; font-family: monospace; font-size: 16px; line-height: 1.2;
+            color: rgba(0,0,0,0.1); writing-mode: vertical-rl; text-orientation: upright;
+            white-space: nowrap; animation: streamUp var(--duration) linear infinite;
+            animation-delay: var(--delay); opacity: 0;
+        }
+        body.dark-mode .data-stream { color: var(--neon-color); text-shadow: 0 0 8px var(--neon-glow); }
+
+        @keyframes streamUp {
+            0% { transform: translateY(0); opacity: 0; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
+            100% { transform: translateY(-150vh); opacity: 0; }
+        }
+
+        /* ---- FLOATING HACKER TERMINAL WINDOWS (Bottom to Top) ---- */
+        .fw {
+            position: absolute; bottom: -250px; background: rgba(255,255,255,0.4);
+            border: 1px solid rgba(0,0,0,0.1); border-top: 18px solid rgba(0,0,0,0.15); border-radius: 8px;
+            animation: floatUp var(--duration) linear infinite; animation-delay: var(--delay); filter: blur(0px); overflow: hidden;
+            transition: all 1s ease;
+        }
+        
+        .code-stream {
+            position: absolute; top: 18px; left: 8px; right: 8px; bottom: 5px; font-family: monospace; font-size: 8px; line-height: 10px; color: rgba(0,0,0,0.25); word-break: break-all; overflow: hidden; opacity: 0.6;
+        }
+
+        body.dark-mode .fw {
+            background: rgba(10, 15, 30, 0.65); border: 1px solid var(--neon-color); border-top: 18px solid var(--neon-color); box-shadow: 0 0 20px var(--neon-glow), inset 0 0 15px rgba(0,0,0,0.8);
+            animation-duration: calc(var(--duration) * 3); filter: blur(var(--depth-blur));
+        }
+        body.dark-mode .code-stream { color: var(--neon-color); text-shadow: 0 0 4px var(--neon-glow); opacity: 0.85; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(var(--scale)) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.85; }
+            90% { opacity: 0.85; }
+            100% { transform: translateY(-130vh) scale(var(--scale)) rotate(var(--rot)); opacity: 0; }
         }
 
         /* =========================================
-           GLASSMORPHISM CYBER PANEL
+           4. TOP NAVIGATION ICONS
            ========================================= */
-        .container { width: 100%; max-width: 420px; position: relative; z-index: 2; }
-        .panel { 
-            background: var(--panel-bg); 
-            border-radius: 16px; 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(0, 240, 255, 0.3); 
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1), inset 0 0 20px rgba(0, 240, 255, 0.05);
-            padding: 40px 30px; 
-            text-align: center; 
-            position: relative;
-            overflow: hidden;
+        .icon-btn {
+            position: fixed; top: 15px; background: var(--card-bg); border: 1px solid var(--border-color);
+            color: var(--text-main); border-radius: 50%; width: 42px; height: 42px; font-size: 1.2rem; cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; z-index: 100;
+            padding: 0; transition: all 0.3s ease; backdrop-filter: blur(12px);
         }
+        .icon-btn:active { transform: scale(0.9); }
+        .admin-toggle { left: 15px; } .theme-toggle { right: 15px; }
         
-        /* Top Glowing Edge */
-        .panel::before {
-            content: ''; position: absolute; top: 0; left: 10%; width: 80%; height: 2px;
-            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
-        }
-
-        /* Clean, Normal Text Settings */
-        h2 { 
-            color: #ffffff; 
-            text-shadow: 0 0 8px var(--neon-cyan); 
-            margin-top: 0; margin-bottom: 5px; 
-            font-size: 1.8rem; font-weight: 800; letter-spacing: 1px;
-        }
-        p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.5; font-weight: 500;}
+        body.dark-mode .theme-toggle { border-color: var(--visitor-color); box-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
+        body.dark-mode .admin-toggle { border-color: var(--admin-color); box-shadow: 0 0 10px rgba(217, 0, 255, 0.4); }
 
         /* =========================================
-           INPUTS & BUTTONS
+           5. RESPONSIVE TYPOGRAPHY
            ========================================= */
-        .password-container { position: relative; width: 100%; margin-bottom: 15px; }
-        
-        input { 
-            width: 100%; padding: 15px 50px 15px 15px; margin: 0; 
-            border: 1px solid var(--input-border); border-radius: 8px; 
-            box-sizing: border-box; font-size: 1rem; 
-            background-color: var(--input-bg); color: var(--text-main); 
-            transition: all 0.3s ease; font-family: inherit;
+        h1, h2, h3, h4 { margin-top: 0; color: var(--text-main); font-weight: 700; }
+        .pre-title { text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+        .app-title { 
+            text-align: center; font-size: clamp(2rem, 8vw, 3.5rem); font-weight: 900; margin-bottom: 8px; line-height: 1.1; 
+            background: linear-gradient(135deg, #0f172a, #0284c7); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        input:focus { 
-            outline: none; border-color: var(--neon-cyan); 
-            box-shadow: 0 0 12px rgba(0, 240, 255, 0.2); 
-            background-color: rgba(0, 240, 255, 0.05);
-        }
-        
-        .eye-btn { 
-            position: absolute; right: 15px; top: 50%; transform: translateY(-50%); 
-            background: none; border: none; cursor: pointer; font-size: 1.2rem; 
-            color: var(--text-muted); padding: 0; width: auto; transition: color 0.2s;
-        }
-        .eye-btn:hover { color: var(--neon-cyan); }
+        .app-subtitle { text-align: center; color: var(--visitor-color); font-size: 1.1rem; margin-bottom: 35px; font-weight: 600; font-style: italic; }
 
-        button[type="submit"] { 
-            background: linear-gradient(90deg, #00f0ff, #0284c7); 
-            color: #ffffff; text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-            border: none; padding: 15px 20px; border-radius: 8px; 
-            cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; 
-            transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;
-            margin-top: 10px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
-        }
-        button[type="submit"]:hover { 
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5); 
-            transform: translateY(-2px); 
-        }
-        button[type="submit"]:active { transform: translateY(1px); }
-        button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
+        body.dark-mode .pre-title { color: #e2e8f0; text-shadow: 0 0 4px rgba(255,255,255,0.4); }
+        body.dark-mode .app-title { background: none; -webkit-text-fill-color: #ffffff; color: #ffffff; text-shadow: 0 0 5px var(--visitor-color), 0 0 15px var(--visitor-color), 0 0 30px rgba(0, 240, 255, 0.6); }
+        body.dark-mode .app-subtitle { color: #bae6fd; text-shadow: 0 0 5px var(--visitor-color), 0 0 10px rgba(0, 240, 255, 0.5); }
 
-        /* Status Messages */
-        .status-msg { margin-top: 15px; font-weight: bold; padding: 12px; border-radius: 8px; text-align: center; font-size: 0.9rem; }
-        .msg-error { background: rgba(239, 68, 68, 0.1); border: 1px solid #ef4444; color: #fca5a5; text-shadow: 0 0 4px rgba(239,68,68,0.4); }
+        /* =========================================
+           6. UI CARDS, PANELS & LIST MENUS
+           ========================================= */
+        .home-grid { display: flex; flex-direction: column; gap: 16px; }
+        .choice-card, .panel { background: var(--card-bg); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); backdrop-filter: blur(16px); border: 1px solid var(--border-color); }
+        .choice-card { padding: 30px 20px; text-align: center; cursor: pointer; }
+        .choice-card:active { transform: scale(0.97); }
+        .choice-card h2 { font-size: 1.5rem; margin-bottom: 6px; }
+        .choice-card p { margin: 0; color: var(--text-muted); font-size: 0.95rem; }
+        .panel { padding: 25px 20px; margin-bottom: 20px; }
+        .panel-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
+        .panel-header h2 { font-size: 1.3rem; margin: 0; }
+        .section-box { background: var(--input-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); margin-bottom: 20px; }
+
+        .list-menu-btn {
+            background: var(--card-bg); border: 1px solid var(--border-color); padding: 16px 20px; border-radius: 12px;
+            margin-bottom: 12px; font-weight: bold; font-size: 1rem; color: var(--text-main); cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02); display: flex; justify-content: space-between; align-items: center;
+        }
+        .list-menu-btn:active { transform: scale(0.98); }
+        .menu-badge { background-color: var(--input-border); color: var(--text-main); padding: 2px 10px; border-radius: 20px; font-size: 0.85rem; font-weight: 800; transition: all 0.3s ease; }
+        
+        .badge-alert { background-color: var(--danger) !important; color: white !important; animation: pulse-red 1.5s infinite; }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+
+        .search-bar { width: 100%; padding: 10px 14px; margin-bottom: 15px; border-radius: 8px; border: 1px solid var(--input-border); background: var(--bg-color); color: var(--text-main); font-size: 0.9rem; }
+        
+        /* VIP Pass Design */
+        .vip-pass { background: linear-gradient(135deg, #1e293b, #0f172a); border-radius: 16px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); text-align: left; border: 1px solid #334155; margin-bottom: 20px; }
+        .pass-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; border-bottom: 1px dashed rgba(255,255,255,0.2); padding-bottom: 15px; }
+        .avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--visitor-color); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; color: white; }
+        .pass-details { margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; }
+        .qr-box { background: white; padding: 15px; border-radius: 12px; display: inline-block; width: 100%; text-align: center; }
+        .vip-pass-text { color: #ffffff !important; }
+        .vip-pass-subtext { color: #38bdf8 !important; letter-spacing: 1px; }
+
+        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s ease-in-out infinite; margin-left: 8px; vertical-align: middle; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* DARK MODE OVERRIDES */
+        body.dark-mode .choice-card, body.dark-mode .panel, body.dark-mode .section-box, body.dark-mode .list-menu-btn { background: var(--card-bg); border-color: rgba(255, 255, 255, 0.1); box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02), 0 10px 30px rgba(0, 0, 0, 0.8); }
+        body.dark-mode .menu-badge { background-color: #334155; color: #f8fafc; }
+        body.dark-mode .choice-card.visitor { border-bottom: 3px solid var(--visitor-color); }
+        body.dark-mode .choice-card.staff { border-bottom: 3px solid var(--staff-color); }
+        body.dark-mode .panel[style*="var(--admin-color)"] { border-bottom: 3px solid var(--admin-color); }
+        body.dark-mode .search-bar { background: #0f172a; border-color: #334155; color: #f8fafc; }
+        body.dark-mode .vip-pass { background: linear-gradient(135deg, #020617, #0f172a); border-color: var(--visitor-color); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+
+        body.dark-mode .choice-card.visitor:hover h2, body.dark-mode h2.neon-visitor { color: #ffffff !important; text-shadow: 0 0 8px var(--visitor-color), 0 0 20px var(--visitor-color) !important; }
+        body.dark-mode .choice-card.staff:hover h2, body.dark-mode h2.neon-staff { color: #ffffff !important; text-shadow: 0 0 8px var(--staff-color), 0 0 20px var(--staff-color) !important; }
+        body.dark-mode h2.neon-admin { color: #ffffff !important; text-shadow: 0 0 8px var(--admin-color), 0 0 20px var(--admin-color) !important; }
+
+        /* SweetAlert Global Customization (Smaller & Responsive) */
+        .swal2-popup {
+            font-size: 0.85rem !important; /* Scaled down base font */
+            padding: 1.5em 1em 1em !important; /* Reduced padding */
+            width: 85% !important; /* Responsive width */
+            max-width: 360px !important; /* Capped max width */
+            border-radius: 16px !important;
+        }
+        .swal2-title { font-size: 1.3rem !important; margin-bottom: 5px !important; }
+        .swal2-html-container { margin: 10px 0 !important; font-size: 0.9rem !important; line-height: 1.4 !important; }
+        .swal2-actions { margin-top: 15px !important; }
+        .swal2-icon { transform: scale(0.8) !important; margin: 0 auto 10px auto !important; } /* Smaller Icon */
+
+        body.dark-mode .swal2-popup { background: #0f172a !important; color: #f8fafc !important; border: 1px solid #334155; box-shadow: 0 0 20px rgba(0,0,0,0.8); }
+        body.dark-mode .swal2-title, body.dark-mode .swal2-html-container { color: #f8fafc !important; }
+        body.dark-mode .swal2-input { background: #1e293b !important; color: white !important; border: 1px solid #475569 !important; }
+
+        /* =========================================
+           7. FORMS, INPUTS & BUTTONS
+           ========================================= */
+        input:not([type="checkbox"]), select { width: 100%; padding: 14px; margin: 8px 0 16px 0; border: 1px solid var(--input-border); border-radius: 12px; box-sizing: border-box; font-size: 1rem; background-color: var(--input-bg); color: var(--text-main); transition: all 0.2s; }
+        input:focus, select:focus { outline: none; border-color: var(--visitor-color); box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.1); }
+        body.dark-mode input:not([type="checkbox"]), body.dark-mode select { border-color: #334155; }
+        body.dark-mode input:not([type="checkbox"]):focus, body.dark-mode select:focus { border-color: var(--visitor-color); box-shadow: 0 0 10px rgba(0, 240, 255, 0.2); }
+
+        .pin-input { text-align: center; font-size: 1.8rem; letter-spacing: 10px; font-weight: bold; }
+        .password-container { position: relative; width: 100%; }
+        .password-container input { padding-right: 50px; }
+        .eye-btn { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.2rem; color: var(--text-muted); padding: 0; width: auto; }
+
+        button { color: white; border: none; padding: 14px 20px; border-radius: 12px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+        button:active { transform: scale(0.98); }
+        .btn-visitor { background-color: var(--visitor-color); } .btn-staff { background-color: var(--staff-color); } .btn-admin { background-color: var(--admin-color); }
+        .scan-btn { background-color: #334155; margin-top: 10px; }
+        .back-btn { background: var(--input-border); color: var(--text-main); width: auto; padding: 8px 14px; font-size: 0.85rem; border-radius: 8px; text-transform: none; }
+        .approve-btn { background: var(--success); width: auto; padding: 8px 14px; font-size: 0.85rem; text-transform: none; }
+        .remove-btn { background: var(--danger); width: auto; padding: 8px 14px; font-size: 0.85rem; text-transform: none; }
+        .logout-btn { background: var(--danger); width: auto; padding: 10px 15px; font-size: 0.9rem; margin-top: 15px;}
+        .tab-active { background: var(--admin-color) !important; color: white !important; border-color: var(--admin-color) !important; }
+        .cred-form { transition: all 0.3s ease; }
+        
+        .small-footer-btn { color: white; border: none; padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; cursor: pointer; font-weight: bold; margin-bottom: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.15); transition: transform 0.2s; text-transform: none; width: auto; }
+        .small-footer-btn:active { transform: scale(0.95); }
+        .btn-f-master { background: var(--admin-color); border: 1px solid var(--admin-color); }
+        .btn-f-visitor { background: var(--visitor-color); border: 1px solid var(--visitor-color); }
+        .btn-f-staff { background: var(--staff-color); border: 1px solid var(--staff-color); }
+
+        body.dark-mode .btn-visitor { background-color: #0284c7; box-shadow: 0 0 10px rgba(0, 240, 255, 0.3); border: 1px solid var(--visitor-color); }
+        body.dark-mode .btn-staff { background-color: #059669; box-shadow: 0 0 10px rgba(0, 255, 102, 0.3); border: 1px solid var(--staff-color); }
+        body.dark-mode .btn-admin { background-color: #7c3aed; box-shadow: 0 0 10px rgba(217, 0, 255, 0.3); border: 1px solid var(--admin-color); }
+        body.dark-mode .scan-btn { background-color: #1e293b; border: 1px solid #475569; }
+        body.dark-mode .back-btn { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+        body.dark-mode .btn-f-master { box-shadow: 0 0 8px rgba(217, 0, 255, 0.4); }
+        body.dark-mode .btn-f-visitor { box-shadow: 0 0 8px rgba(0, 240, 255, 0.4); }
+        body.dark-mode .btn-f-staff { box-shadow: 0 0 8px rgba(0, 255, 102, 0.4); }
+
+        .auth-toggle { text-align: center; margin-top: 20px; font-size: 0.95rem; color: var(--text-muted); }
+        .auth-toggle span { font-weight: bold; cursor: pointer; text-decoration: underline; padding: 5px; }
+        .toggle-visitor { color: var(--visitor-color); } .toggle-staff { color: var(--staff-color); }
+        body.dark-mode .toggle-visitor { color: var(--visitor-color); text-shadow: 0 0 5px rgba(0,240,255,0.4); }
+        body.dark-mode .toggle-staff { color: var(--staff-color); text-shadow: 0 0 5px rgba(0,255,102,0.4); }
+        .forgot-pass { margin-top: 10px; font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+        .forgot-pass span { cursor: pointer; text-decoration: underline; }
+
+        /* =========================================
+           8. BADGES, SCANNER & LISTS
+           ========================================= */
+        .status-badge { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;}
+        .bg-pending { background: #fef3c7; color: #b45309; } .bg-success { background: #d1fae5; color: #047857; } .bg-danger { background: #fee2e2; color: #be123c; }
+        
+        body.dark-mode .bg-pending { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid #fbbf24; }
+        body.dark-mode .bg-success { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid #10b981; }
+        body.dark-mode .bg-danger { background: rgba(225, 29, 72, 0.15); color: #fda4af; border: 1px solid #f43f5e; }
+
+        .scanner-box { background: var(--text-main); color: var(--bg-color); padding: 20px; border-radius: 16px; margin-bottom: 20px; }
+        body.dark-mode .scanner-box { background: #0f172a; color: white; border: 1px solid #334155; }
+        .camera-view { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 15px; border: 2px dashed #475569; min-height: 220px;}
+        .status-msg { margin-top: 15px; font-weight: bold; padding: 12px; border-radius: 10px; text-align: center; font-size: 0.95rem;}
+        .msg-success { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+        .msg-error { background: #fee2e2; color: #9f1239; border: 1px solid #fda4af; }
         .hidden { display: none !important; }
-        .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: spin 1s linear infinite; margin-left: 8px; vertical-align: middle; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .list-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 5px; border-bottom: 1px solid var(--border-color); }
+        .list-item:last-child { border-bottom: none; }
+        .list-item strong { color: var(--text-main); } .list-item small { color: var(--text-muted); }
+        .scanned-by-text { color: var(--visitor-color); font-size: 0.8rem; margin-left: 8px; font-weight: bold; }
+        body.dark-mode .scanned-by-text { color: #00f0ff; }
 
-        /* SweetAlert Cyber Theme Override */
-        .swal2-popup { background: #0f172a !important; color: #f8fafc !important; border: 1px solid #00f0ff; box-shadow: 0 0 20px rgba(0,240,255,0.2) !important; border-radius: 16px !important; }
-        .swal2-title { color: #00f0ff !important; text-shadow: 0 0 8px rgba(0,240,255,0.5); }
+        /* =========================================
+           9. FULL SCREEN WELCOME OVERLAY
+           ========================================= */
+        #welcomeOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 2000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+        }
+        #welcomeOverlay.active { opacity: 1; pointer-events: auto; }
+        .welcome-content { text-align: center; padding: 20px; animation: scaleUp 0.5s ease-out; }
+        @keyframes scaleUp { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .welcome-title { font-size: clamp(2.5rem, 10vw, 4.5rem); font-weight: 900; margin-bottom: 10px; color: #4c1d95; font-family: 'Georgia', serif; letter-spacing: 2px; }
+        .welcome-subtitle { font-size: clamp(1.2rem, 5vw, 1.8rem); color: var(--text-muted); font-style: italic; margin-bottom: 30px; }
+        .tap-continue { font-size: 0.9rem; color: var(--text-muted); opacity: 0.7; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
+
+        body.dark-mode #welcomeOverlay { background: rgba(5, 8, 20, 0.95); backdrop-filter: blur(10px); }
+        body.dark-mode .welcome-title { color: #ffffff; text-shadow: 0 0 10px #7c3aed, 0 0 20px #7c3aed, 0 0 40px #d900ff, 0 0 80px #d900ff; }
+        body.dark-mode .welcome-subtitle { color: #e9d5ff; text-shadow: 0 0 8px #7c3aed; }
+
+        /* =========================================
+           10. FOOTER SECTION
+           ========================================= */
+        .app-footer { width: 100%; max-width: 500px; margin-top: auto; padding: 30px 15px 15px; text-align: center; color: var(--text-muted); border-top: 1px solid var(--border-color); z-index: 2; }
+        body.dark-mode .app-footer { border-color: rgba(255, 255, 255, 0.05); }
+
+        .about-tab { cursor: pointer; display: inline-block; font-weight: 700; color: var(--visitor-color); margin-bottom: 15px; font-size: 1rem; transition: all 0.3s; }
+        .about-tab:hover { text-decoration: underline; }
+        body.dark-mode .about-tab { color: #00f0ff; text-shadow: 0 0 8px rgba(0, 240, 255, 0.5); }
+
+        .about-content { background: var(--card-bg); border: 1px solid var(--border-color); padding: 15px; border-radius: 12px; margin-bottom: 20px; font-size: 0.95rem; color: var(--text-main); line-height: 1.5; box-shadow: 0 4px 10px rgba(0,0,0,0.05); animation: slideDown 0.3s ease-out forwards; }
+        body.dark-mode .about-content { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 0 15px rgba(0, 240, 255, 0.05); }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .copyright { font-size: 0.85rem; }
+        
+        .visitor-counter-box { margin-top: 10px; padding: 10px; border-radius: 8px; font-weight: bold; background: rgba(124, 58, 237, 0.1); border: 1px solid var(--admin-color); color: var(--admin-color); display: inline-block; }
+        body.dark-mode .visitor-counter-box { color: #d900ff; text-shadow: 0 0 5px rgba(217,0,255,0.5); box-shadow: 0 0 10px rgba(217,0,255,0.2); }
     </style>
 </head>
 <body>
 
-<!-- CYBER BACKGROUND ELEMENTS -->
-<div class="cyber-grid"></div>
-<div class="scanner-line"></div>
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
+<!-- === DYNAMIC BACKGROUND ENGINE === -->
+<div id="hacker-bg">
+    <div class="light-source light-1"></div><div class="light-source light-2"></div><div class="light-source light-3"></div>
+    
+    <!-- FALLING APPLE & WINDOWS LOGOS (Top to Bottom) -->
+    <div class="falling-logo" style="left: 10%; width: 100px; height: 100px; --scale: 1.2; --duration: 35s; --delay: 0s; --rot: 180deg; --blur: 1px; --neon-color: #00f0ff; --neon-glow: rgba(0, 240, 255, 0.8);"><svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></div>
+    <div class="falling-logo" style="left: 45%; width: 130px; height: 130px; --scale: 0.8; --duration: 40s; --delay: 5s; --rot: -220deg; --blur: 3px; --neon-color: #d900ff; --neon-glow: rgba(217, 0, 255, 0.8);"><svg viewBox="0 0 448 512"><path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/></svg></div>
+    <div class="falling-logo" style="left: 75%; width: 90px; height: 90px; --scale: 0.9; --duration: 38s; --delay: 2s; --rot: 90deg; --blur: 2px; --neon-color: #00ff66; --neon-glow: rgba(0, 255, 102, 0.8);"><svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></div>
+    <div class="falling-logo" style="left: -5%; width: 150px; height: 150px; --scale: 0.5; --duration: 45s; --delay: 10s; --rot: -120deg; --blur: 5px; --neon-color: #00f0ff; --neon-glow: rgba(0, 240, 255, 0.8);"><svg viewBox="0 0 448 512"><path d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z"/></svg></div>
+    <div class="falling-logo" style="left: 90%; width: 110px; height: 110px; --scale: 1.1; --duration: 32s; --delay: 15s; --rot: 200deg; --blur: 4px; --neon-color: #d900ff; --neon-glow: rgba(217, 0, 255, 0.8);"><svg viewBox="0 0 384 512"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg></div>
 
-<div class="container">
-    <div class="panel">
-        <h2>Reset Password</h2>
-        <p id="userEmailDisplay">Verifying secure connection...</p>
-        
-        <form id="formResetPass">
-            <div class="password-container">
-                <input type="password" id="newPass" placeholder="Enter New Password" required>
-                <button type="button" class="eye-btn" onclick="togglePassword('newPass', this)">👁️</button>
-            </div>
-            <div class="password-container">
-                <input type="password" id="confirmPass" placeholder="Confirm New Password" required>
-                <button type="button" class="eye-btn" onclick="togglePassword('confirmPass', this)">👁️</button>
-            </div>
-            
-            <button type="submit" id="resetBtn">Update Security Key</button>
-            <div id="resetError" class="status-msg msg-error hidden"></div>
-        </form>
+    <!-- Vertical Data Streams (Bottom to Top) -->
+    <div class="data-stream" style="left: 15%; --duration: 18s; --delay: 0s; --neon-color: #00f0ff; --neon-glow: rgba(0,240,255,0.6);">01101001 01100001 01101101 01100100 01100001 01110010 01110011 01100001 01101110</div>
+    <div class="data-stream" style="left: 30%; --duration: 22s; --delay: 3s; --neon-color: #00ff66; --neon-glow: rgba(0,255,102,0.6);">10101100 11110011 10010100 01100100 11000010</div>
+    <div class="data-stream" style="left: 55%; --duration: 15s; --delay: 1s; --neon-color: #d900ff; --neon-glow: rgba(217,0,255,0.6);">00110011 10101010 01010101 00111100 11110000</div>
+    <div class="data-stream" style="left: 80%; --duration: 25s; --delay: 2s; --neon-color: #00f0ff; --neon-glow: rgba(0,240,255,0.6);">11001100 01101001 01101001 01100001 10101011</div>
+
+    <!-- Floating Hacker Terminal Windows (Bottom to Top) -->
+    <div class="fw" style="left: 5%; width: 170px; height: 120px; --scale: 1; --duration: 12s; --delay: 0s; --rot: 4deg; --depth-blur: 0px; --neon-color: #00f0ff; --neon-glow: rgba(0, 240, 255, 0.4);">
+        <div class="code-stream">01101001 01101001 01100001 10101011 11001100 00110011 10101010 01010101 00111100 11110000 11001100 01101001 01101001 01100001 10101011 11001100 00110011 10101010 01010101 00111100 11110000 11001100</div>
+    </div>
+    <div class="fw" style="left: 75%; width: 220px; height: 150px; --scale: 0.75; --duration: 16s; --delay: 2s; --rot: -5deg; --depth-blur: 3px; --neon-color: #d900ff; --neon-glow: rgba(217, 0, 255, 0.4);">
+        <div class="code-stream">SYS_AUTH_PASS // 2K26_INIT(); ACCESS_GRANTED(TRUE); 01010101 11001100 01101001 01101001 01100001 10101011 11001100 00110011 10101010 01010101 00111100 11110000 11001100</div>
+    </div>
+    <div class="fw" style="left: 35%; width: 130px; height: 95px; --scale: 0.5; --duration: 22s; --delay: 4s; --rot: 8deg; --depth-blur: 6px; --neon-color: #00ff66; --neon-glow: rgba(0, 255, 102, 0.4);">
+        <div class="code-stream">10101010 01010101 00111100 11110000 11001100 01101001 01101001 01100001 10101011 11001100 00110011 10101010 01010101 00111100 11110000 11001100</div>
+    </div>
+    <div class="fw" style="left: 60%; width: 190px; height: 130px; --scale: 0.6; --duration: 25s; --delay: 1s; --rot: -7deg; --depth-blur: 5px; --neon-color: #00f0ff; --neon-glow: rgba(0, 240, 255, 0.4);">
+        <div class="code-stream">FIREBASE_RTDB_SYNC(); 01101001 01101001 01100001 10101011 11001100 00110011 10101010 01010101 00111100 11110000 11001100 01101001 01101001 01100001 10101011 11001100 00110011</div>
     </div>
 </div>
 
+<!-- === FULL SCREEN WELCOME OVERLAY === -->
+<div id="welcomeOverlay" class="hidden" onclick="hideWelcomeScreen()">
+    <div class="welcome-content">
+        <h1 class="welcome-title">Welcome to IIA</h1>
+        <p class="welcome-subtitle">Thank you for joining us.</p>
+        <p class="tap-continue">(Tap anywhere to close)</p>
+    </div>
+</div>
+
+<!-- SECRET ADMIN ICON -->
+<button class="icon-btn admin-toggle" onclick="handleAdminIconClick()" title="Info">🛡️</button>
+<button id="themeToggle" class="icon-btn theme-toggle" onclick="toggleTheme()" title="Toggle Day/Night Mode">🌙</button>
+
+<div class="container">
+
+    <!-- === HOME SCREEN === -->
+    <div id="view-home" class="view-section active">
+        <h4 class="pre-title">Inside Inspiration Academy's Students Presents</h4>
+        <h1 class="app-title">TEACHERS DAY 2K26</h1>
+        <p class="app-subtitle">Welcome to our highly anticipated program</p>
+        
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">Select your portal to continue</p>
+        
+        <div class="home-grid">
+            <div class="choice-card visitor" onclick="switchView('view-visitor')">
+                <h2 style="color: var(--visitor-color);">👤 Students</h2>
+                <p>Request and view entry pass</p>
+            </div>
+            <div class="choice-card staff" onclick="switchView('view-staff')">
+                <h2 style="color: var(--staff-color);">📋 Admins</h2>
+                <p>Approve and scan passes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- === 1. STUDENTS PORTAL === -->
+    <div id="view-visitor" class="view-section">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="neon-visitor" style="color: var(--visitor-color);">Student Portal</h2>
+                <button class="back-btn" onclick="switchView('view-home')">Close ✕</button>
+            </div>
+            
+            <div id="visitorAuthSection">
+                <!-- Login Form -->
+                <form id="formVisitorLogin">
+                    <h3>Student Login</h3>
+                    <input type="email" id="vLoginEmail" placeholder="Email Address" required>
+                    <div class="password-container">
+                        <input type="password" id="vLoginPass" placeholder="Password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('vLoginPass', this)">👁️</button>
+                    </div>
+                    <button type="submit" class="btn-visitor" id="btnLoginVisitor">Log In</button>
+                    <div id="vLoginError" class="status-msg msg-error hidden">Invalid credentials.</div>
+                    
+                    <div class="forgot-pass"><span onclick="toggleAuth('visitor', 'forgot')">Forgot Password?</span></div>
+                    <div class="auth-toggle">New student? <span class="toggle-visitor" onclick="toggleAuth('visitor', 'signup')">Sign Up</span></div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="formVisitorSignup" class="hidden">
+                    <h3>Student Signup</h3>
+                    <input type="text" id="vSignupName" placeholder="Full Name" required>
+                    <input type="email" id="vSignupEmail" placeholder="Email Address" required>
+                    <div class="password-container">
+                        <input type="password" id="vSignupPass" placeholder="Create Password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('vSignupPass', this)">👁️</button>
+                    </div>
+                    <button type="submit" class="btn-visitor" id="btnSignupVisitor">Sign Up</button>
+                    <div id="vSignupError" class="status-msg msg-error hidden"></div>
+                    <div class="auth-toggle">Have an account? <span class="toggle-visitor" onclick="toggleAuth('visitor', 'login')">Log In</span></div>
+                </form>
+
+                <!-- Forgot Password Form -->
+                <form id="formVisitorForgot" class="hidden">
+                    <h3>Reset Student Password</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom:15px;">We will send a secure reset link to your email inbox.</p>
+                    <input type="email" id="vForgotEmail" placeholder="Registered Email" required>
+                    <button type="submit" class="btn-visitor" id="btnForgotVisitor">Send Reset Link</button>
+                    <div id="vForgotError" class="status-msg msg-error hidden"></div>
+                    <div class="auth-toggle">Remembered? <span class="toggle-visitor" onclick="toggleAuth('visitor', 'login')">Log In</span></div>
+                </form>
+            </div>
+
+            <div id="visitorDashboard" class="hidden">
+                <h3 id="vWelcomeMsg" style="margin-bottom: 5px;"></h3>
+                <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0; margin-bottom: 20px;">Your event entry pass</p>
+
+                <!-- STUDENT CHANGE PASSWORD SECTION -->
+                <div id="vChangePassSection" class="hidden section-box" style="margin-bottom: 20px;">
+                    <h3 style="margin-top:0;">Change Password</h3>
+                    <div class="password-container">
+                        <input type="password" id="vNewPassInput" placeholder="New Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('vNewPassInput', this)">👁️</button>
+                    </div>
+                    <div class="password-container">
+                        <input type="password" id="vConfirmPassInput" placeholder="Confirm New Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('vConfirmPassInput', this)">👁️</button>
+                    </div>
+                    <button class="btn-visitor" onclick="submitVisitorPasswordChange()" id="btnUpdatePassVisitor">Update Password</button>
+                    <button class="back-btn" style="margin-top: 10px; width: 100%; text-align: center;" onclick="toggleVisitorChangePass()">Cancel</button>
+                    <div id="vChangePassError" class="status-msg msg-error hidden"></div>
+                </div>
+
+                <!-- FOOD PREFERENCE DROPDOWN -->
+                <div id="foodPreferenceSection" class="section-box" style="margin-bottom: 15px; padding: 15px; text-align: left; background: transparent; border: none; box-shadow: none;">
+                    <label for="foodPrefSelect" style="display: block; margin-bottom: 8px; font-weight: bold; color: var(--text-main); font-size: 1.1rem;">🍽️ Select Food Preference:</label>
+                    <select id="foodPrefSelect" required>
+                        <option value="" disabled selected>-- Select an option --</option>
+                        <option value="Veg">Veg</option>
+                        <option value="Non Veg">Non Veg</option>
+                        <option value="Pure Veg">Pure Veg</option>
+                    </select>
+                    <div id="foodPrefError" class="status-msg msg-error hidden" style="margin-top: 5px; padding: 8px;">❌ Please select a food preference to continue.</div>
+                </div>
+
+                <button id="btnRequestPass" class="btn-visitor" onclick="requestTicket()">Request Digital Pass</button>
+
+                <!-- VIP DIGITAL PASS UI -->
+                <div id="userTicketDisplay" class="hidden">
+                    <div class="vip-pass">
+                        <div class="pass-header">
+                            <div id="passAvatar" class="avatar">V</div>
+                            <div>
+                                <h3 id="tktName" class="vip-pass-text" style="margin: 0; font-size: 1.3rem;">Student Name</h3>
+                                <p class="vip-pass-subtext" style="margin: 0; font-size: 0.8rem; letter-spacing: 1px;">IIA STUDENT PASS</p>
+                            </div>
+                        </div>
+                        <div class="pass-details">
+                            <p class="vip-pass-text" style="margin: 5px 0;"><strong>Event:</strong> Teachers Day 2K26</p>
+                            <p class="vip-pass-text" style="margin: 5px 0;"><strong>Venue:</strong> Mohit Moitra Mancha</p>
+                            <p class="vip-pass-text" style="margin: 5px 0;"><strong>Date:</strong> 10 October 2026, (Mahalaya)</p>
+                            <p class="vip-pass-text" style="margin: 5px 0 15px 0;"><strong>Time:</strong> 11:30 AM</p>
+                            <span id="tktStatus" class="status-badge bg-pending">Pending Approval</span>
+                        </div>
+                        <div id="tktQrContainer" class="qr-box hidden">
+                            <canvas id="qrCanvas"></canvas>
+                            <!-- Dynamic Download Pass Button -->
+                            <button id="btnDownloadPassPNG" onclick="downloadPassAsPNG()" style="width:100%; margin-top:15px; background:var(--visitor-color); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer; text-transform:uppercase; font-size:0.85rem; box-shadow:0 4px 6px rgba(0,0,0,0.1);">📥 Download E-Pass</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Easy Access Always Visible Password Change -->
+                <button class="back-btn" style="width: 100%; margin-top: 10px; font-weight: bold;" onclick="toggleVisitorChangePass()">🔐 Change Password</button>
+                <button class="logout-btn" onclick="logout('visitor')">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === 2. ADMINS PORTAL === -->
+    <div id="view-staff" class="view-section">
+        <div class="panel">
+            <div class="panel-header">
+                <h2 class="neon-staff" style="color: var(--staff-color);">Admin Portal</h2>
+                <button class="back-btn" onclick="switchView('view-home')">Close ✕</button>
+            </div>
+            
+            <div id="staffAuthSection">
+                <!-- Login Form -->
+                <form id="formStaffLogin">
+                    <h3>Admin Login</h3>
+                    <input type="email" id="sLoginEmail" placeholder="Admin Email" required>
+                    <div class="password-container">
+                        <input type="password" id="sLoginPass" placeholder="Password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('sLoginPass', this)">👁️</button>
+                    </div>
+                    <button type="submit" class="btn-staff" id="btnLoginStaff">Log In</button>
+                    <div id="sLoginError" class="status-msg msg-error hidden">Invalid credentials or awaiting Master Approval.</div>
+                    
+                    <div class="forgot-pass"><span onclick="toggleAuth('staff', 'forgot')">Forgot Password?</span></div>
+                    <div class="auth-toggle">New admin? <span class="toggle-staff" onclick="toggleAuth('staff', 'signup')">Register Here</span></div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="formStaffSignup" class="hidden">
+                    <h3>Admin Registration</h3>
+                    <input type="text" id="sSignupName" placeholder="Full Name" required>
+                    <input type="email" id="sSignupEmail" placeholder="Admin Email" required>
+                    <div class="password-container">
+                        <input type="password" id="sSignupPass" placeholder="Create Password" required>
+                        <button type="button" class="eye-btn" onclick="togglePassword('sSignupPass', this)">👁️</button>
+                    </div>
+                    <button type="submit" class="btn-staff" id="btnSignupStaff">Register for Approval</button>
+                    <div id="sSignupError" class="status-msg msg-error hidden"></div>
+                    <div class="auth-toggle">Registered? <span class="toggle-staff" onclick="toggleAuth('staff', 'login')">Log In</span></div>
+                </form>
+
+                <!-- Forgot Password Form -->
+                <form id="formStaffForgot" class="hidden">
+                    <h3>Reset Admin Password</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom:15px;">We will send a secure reset link to your email inbox.</p>
+                    <input type="email" id="sForgotEmail" placeholder="Registered Admin Email" required>
+                    <button type="submit" class="btn-staff" id="btnForgotStaff">Send Reset Link</button>
+                    <div id="sForgotError" class="status-msg msg-error hidden"></div>
+                    <div class="auth-toggle">Remembered? <span class="toggle-staff" onclick="toggleAuth('staff', 'login')">Log In</span></div>
+                </form>
+            </div>
+
+            <div id="staffDashboard" class="hidden">
+                <h3 id="sWelcomeMsg" style="margin-top:0; margin-bottom: 20px;"></h3>
+
+                <!-- STAFF CHANGE PASSWORD SECTION -->
+                <div id="sChangePassSection" class="hidden section-box" style="margin-bottom: 20px;">
+                    <h3 style="margin-top:0;">Change Password</h3>
+                    <div class="password-container">
+                        <input type="password" id="sNewPassInput" placeholder="New Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('sNewPassInput', this)">👁️</button>
+                    </div>
+                    <div class="password-container">
+                        <input type="password" id="sConfirmPassInput" placeholder="Confirm New Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('sConfirmPassInput', this)">👁️</button>
+                    </div>
+                    <button class="btn-staff" onclick="submitStaffPasswordChange()" id="btnUpdatePassStaff">Update Password</button>
+                    <button class="back-btn" style="margin-top: 10px; width: 100%; text-align: center;" onclick="toggleStaffChangePass()">Cancel</button>
+                    <div id="sChangePassError" class="status-msg msg-error hidden"></div>
+                </div>
+
+                <!-- MAIN DASHBOARD MENU -->
+                <div id="staffMenu">
+                    <button class="btn-staff" style="margin-bottom: 15px; background-color: #8b5cf6; border-color: #8b5cf6;" onclick="openScanner('staff')">📷 SCAN QR</button>
+                    
+                    <div class="list-menu-btn" style="border-left: 4px solid var(--visitor-color);" onclick="openListView('staff', 'staffViewPending')">
+                        <span>🛡️ Pending Student Approvals</span>
+                        <span id="badge-staff-pendStudent" class="menu-badge">0</span>
+                    </div>
+                    <div class="list-menu-btn" onclick="openListView('staff', 'staffViewApproved')">
+                        <span>👥 Active Student Passes</span>
+                        <span id="badge-staff-appStudent" class="menu-badge">0</span>
+                    </div>
+                </div>
+
+                <!-- ISOLATED LIST VIEWS -->
+                <div id="staffViewPending" class="hidden section-box" style="border-left: 4px solid var(--visitor-color);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; font-size:1.1rem;">🛡️ Pending Student Approvals</h3>
+                        <button class="back-btn" style="margin:0; padding:4px 10px;" onclick="closeListView('staff', 'staffViewPending')">✕</button>
+                    </div>
+                    <input type="text" class="search-bar" id="search-staffPending" placeholder="Search by name, email or ID..." onkeyup="filterList('search-staffPending', 'staffPendingList')">
+                    <div id="staffPendingList" style="font-size: 0.95rem;"></div>
+                </div>
+
+                <div id="staffViewApproved" class="hidden section-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; font-size:1.1rem;">👥 Active Student Passes</h3>
+                        <button class="back-btn" style="margin:0; padding:4px 10px;" onclick="closeListView('staff', 'staffViewApproved')">✕</button>
+                    </div>
+                    <input type="text" class="search-bar" id="search-staffApproved" placeholder="Search by name, email or ID..." onkeyup="filterList('search-staffApproved', 'staffApprovedList')">
+                    <div id="staffApprovedList" style="font-size: 0.95rem;"></div>
+                </div>
+
+                <!-- ISOLATED SCANNER BOX -->
+                <div id="staffScannerBox" class="scanner-box hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3 style="margin:0; font-size: 1.2rem;">📱 Door Scanner</h3>
+                        <button class="back-btn" style="margin:0; background: var(--danger); color: white; padding:4px 10px;" onclick="closeScanner('staff')">✕</button>
+                    </div>
+                    <div id="staff-reader" class="camera-view"></div>
+                    <button class="scan-btn" onclick="startCamera('staff-reader', 'staffScanResult')" style="background-color: var(--success); border: none; color: white;">Start Camera</button>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="staffScannerInput" placeholder="Simulate (Enter ID)" style="background: white; color: black; border:none; margin: 0; flex: 2;">
+                        <button class="scan-btn" onclick="processScan(document.getElementById('staffScannerInput').value, 'staffScanResult')" style="margin: 0; flex: 1;">Enter</button>
+                    </div>
+                    <div id="staffScanResult" class="status-msg hidden"></div>
+                </div>
+
+                <button id="btnStaffLogout" class="logout-btn" onclick="logout('staff')">Log Out</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === 3. MASTER CONTROL PORTAL === -->
+    <div id="view-admin" class="view-section">
+        <div class="panel" style="border: 2px solid var(--admin-color);">
+            <div class="panel-header">
+                <!-- HIDDEN EASTER EGG DOUBLE TAP HERE -->
+                <h2 class="neon-admin" style="color: var(--admin-color); user-select: none;" onclick="handleMasterHeaderTap(event)">Master Control</h2>
+                <button class="back-btn" onclick="switchView('view-home')">Close ✕</button>
+            </div>
+            
+            <!-- STEP 1: PIN VERIFICATION -->
+            <div id="admin2FASection">
+                <h3 style="text-align: center; color: var(--admin-color);">Step 1: Security PIN</h3>
+                <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Enter the 6-digit Master Security PIN to continue.</p>
+                <input type="password" id="aLoginPin" class="pin-input" placeholder="••••••" maxlength="6" pattern="\d{6}" autocomplete="off">
+                <button class="btn-admin" onclick="verifyAdminPin()" id="btnVerifyPin">Verify PIN</button>
+                
+                <!-- SECRET FORGOT PASSWORD BUTTON (HIDDEN) -->
+                <div id="masterRecoveryBtn1" class="forgot-pass hidden" style="margin-top: 15px;"><span onclick="showMasterReset()">Forgot Password?</span></div>
+                
+                <button class="back-btn" onclick="cancelAdminLogin('home')" style="margin-top: 15px; width: 100%; text-align: center;">Cancel Login</button>
+                <div id="aPinError" class="status-msg msg-error hidden">Invalid PIN Code</div>
+            </div>
+
+            <!-- STEP 2: USERNAME & PASSWORD -->
+            <div id="adminAuthSection" class="hidden">
+                <h3>Step 2: Master Credentials</h3>
+                <input type="text" id="aLoginUser" placeholder="Master Username" autocomplete="off">
+                <div class="password-container">
+                    <input type="password" id="aLoginPass" placeholder="Master Password">
+                    <button type="button" class="eye-btn" onclick="togglePassword('aLoginPass', this)">👁️</button>
+                </div>
+                <button class="btn-admin" onclick="handleAdminLogin()" id="btnMasterLogin">Secure Login</button>
+                
+                <!-- SECRET FORGOT PASSWORD BUTTON (HIDDEN) -->
+                <div id="masterRecoveryBtn2" class="forgot-pass hidden" style="margin-top: 15px;"><span onclick="showMasterReset()">Forgot Password?</span></div>
+
+                <button class="back-btn" onclick="cancelAdminLogin('back')" style="margin-top: 15px; width: 100%; text-align: center;">Go Back</button>
+                <div id="aLoginError" class="status-msg msg-error hidden">Access Denied</div>
+            </div>
+
+            <!-- MASTER RESET VERIFICATION SCREEN -->
+            <div id="adminResetVerifySection" class="hidden">
+                <h3 style="color: var(--admin-color);">Master Recovery & Setup</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">A secure verification link will be sent to the registered Master Admin email to authorize the credential setup or reset.</p>
+                <button class="btn-admin" onclick="sendMasterRecoveryEmail()" id="btnSendRecLink">Send Recovery Link</button>
+                <button class="back-btn" onclick="cancelMasterReset()" style="margin-top: 15px; width: 100%; text-align: center;">Cancel</button>
+                <div id="aRecError" class="status-msg msg-error hidden">Verification Failed</div>
+            </div>
+
+            <!-- MASTER ADMIN SIGN UP SCREEN -->
+            <div id="adminSignupSection" class="hidden">
+                <h3 style="color: var(--admin-color);">Master Admin Setup</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">Create your new Master Admin credentials. These will be securely saved.</p>
+                <input type="text" id="aNewName" placeholder="Enter Your Name" autocomplete="off">
+                <input type="text" id="aNewUser" placeholder="New Master Username" autocomplete="off">
+                <div class="password-container">
+                    <input type="password" id="aNewPass" placeholder="New Master Password">
+                    <button type="button" class="eye-btn" onclick="togglePassword('aNewPass', this)">👁️</button>
+                </div>
+                <div class="password-container">
+                    <input type="password" id="aNewPin" class="pin-input" placeholder="New 6-Digit PIN" maxlength="6" pattern="\d{6}">
+                    <button type="button" class="eye-btn" onclick="togglePassword('aNewPin', this)">👁️</button>
+                </div>
+                <button class="btn-admin" onclick="saveNewMasterCredentials()" id="btnSaveMasterCreds">Save Credentials</button>
+                <button class="back-btn" onclick="cancelMasterReset()" style="margin-top: 15px; width: 100%; text-align: center;">Cancel</button>
+                <div id="aNewError" class="status-msg msg-error hidden">Please fill all fields correctly. PIN must be 6 digits.</div>
+            </div>
+
+            <!-- MASTER CHANGE CREDENTIALS SCREEN -->
+            <div id="adminChangeCredsSection" class="hidden">
+                <h3 style="color: var(--admin-color); margin-top:0;">Change Credentials</h3>
+                
+                <div style="display: flex; gap: 5px; margin-bottom: 15px;">
+                    <button class="back-btn tab-active" id="tab-user" onclick="switchCredTab('user')" style="flex:1; font-size:0.8rem; padding: 8px 5px;">Username</button>
+                    <button class="back-btn" id="tab-pass" onclick="switchCredTab('pass')" style="flex:1; font-size:0.8rem; padding: 8px 5px;">Password</button>
+                    <button class="back-btn" id="tab-pin" onclick="switchCredTab('pin')" style="flex:1; font-size:0.8rem; padding: 8px 5px;">2-Step PIN</button>
+                </div>
+
+                <div id="form-change-user" class="cred-form">
+                    <input type="text" id="cOldUser" placeholder="Current Username" autocomplete="off">
+                    <div class="password-container">
+                        <input type="password" id="cPassForUser" placeholder="Current Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cPassForUser', this)">👁️</button>
+                    </div>
+                    <div class="password-container">
+                        <input type="password" id="cPinForUser" class="pin-input" placeholder="Current 6-Digit PIN" maxlength="6" pattern="\d{6}">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cPinForUser', this)">👁️</button>
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
+                    <input type="text" id="cNewUser" placeholder="New Username" autocomplete="off">
+                    <button class="btn-admin" onclick="updateMasterUsername()" id="btnUpdateUser">Update Username</button>
+                </div>
+
+                <div id="form-change-pass" class="cred-form hidden">
+                    <div class="password-container">
+                        <input type="password" id="cOldPass" placeholder="Current Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cOldPass', this)">👁️</button>
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
+                    <div class="password-container">
+                        <input type="password" id="cNewPass" placeholder="New Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cNewPass', this)">👁️</button>
+                    </div>
+                    <div class="password-container">
+                        <input type="password" id="cNewPassConfirm" placeholder="Confirm New Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cNewPassConfirm', this)">👁️</button>
+                    </div>
+                    <button class="btn-admin" onclick="updateMasterPassword()" id="btnUpdatePass">Update Password</button>
+                </div>
+
+                <div id="form-change-pin" class="cred-form hidden">
+                    <div class="password-container">
+                        <input type="password" id="cPassForPin" placeholder="Current Password">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cPassForPin', this)">👁️</button>
+                    </div>
+                    <div class="password-container">
+                        <input type="password" id="cOldPin" class="pin-input" placeholder="Current 6-Digit PIN" maxlength="6" pattern="\d{6}">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cOldPin', this)">👁️</button>
+                    </div>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 15px 0;">
+                    <div class="password-container">
+                        <input type="password" id="cNewPin" class="pin-input" placeholder="New 6-Digit PIN" maxlength="6" pattern="\d{6}">
+                        <button type="button" class="eye-btn" onclick="togglePassword('cNewPin', this)">👁️</button>
+                    </div>
+                    <button class="btn-admin" onclick="updateMasterPin()" id="btnUpdatePin">Update 2-Step PIN</button>
+                </div>
+
+                <button class="back-btn" onclick="hideChangeCredsForm()" style="margin-top: 15px; width: 100%; text-align: center;">Cancel</button>
+                <div id="cCredsError" class="status-msg msg-error hidden"></div>
+                <div id="cCredsSuccess" class="status-msg msg-success hidden"></div>
+            </div>
+
+            <!-- DASHBOARD AFTER LOGGING IN -->
+            <div id="adminDashboard" class="hidden">
+                <h3 style="margin-top:0; margin-bottom: 20px;">Master Dashboard</h3>
+                
+                <!-- MAIN DASHBOARD MENU -->
+                <div id="masterMenu">
+                    <button class="btn-admin" style="margin-bottom: 15px; background-color: #8b5cf6; border-color: #8b5cf6;" onclick="openScanner('master')">📷 SCAN QR</button>
+                    
+                    <div class="list-menu-btn" style="border-left: 4px solid var(--admin-color);" onclick="openListView('master', 'adminViewStaffApprove')">
+                        <span>🛡️ Pending Admin Approvals</span>
+                        <span id="badge-master-pendAdmin" class="menu-badge">0</span>
+                    </div>
+                    <div class="list-menu-btn" onclick="openListView('master', 'adminViewStaff')">
+                        <span>👥 Approved Admins</span>
+                        <span id="badge-master-appAdmin" class="menu-badge">0</span>
+                    </div>
+                    <div class="list-menu-btn" onclick="openListView('master', 'adminViewPending')">
+                        <span>Pending Student Authorizations</span>
+                        <span id="badge-master-pendStudent" class="menu-badge">0</span>
+                    </div>
+                    <div class="list-menu-btn" onclick="openListView('master', 'adminViewApproved')">
+                        <span>All Active IIA Students</span>
+                        <span id="badge-master-appStudent" class="menu-badge">0</span>
+                    </div>
+                    <div class="list-menu-btn" style="border-left: 4px solid var(--success);" onclick="openListView('master', 'adminViewPresent')">
+                        <span>📍 Present in Venue (Scanned)</span>
+                        <span id="badge-master-present" class="menu-badge">0</span>
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: row; gap: 10px; margin-top: 10px;">
+                        <button class="btn-visitor" style="flex: 1; background-color: #0284c7; margin: 0; font-size: 0.85rem;" onclick="downloadPDF()">📄 PDF REPORT</button>
+                        <button class="btn-visitor" style="flex: 1; background-color: #10b981; margin: 0; font-size: 0.85rem;" onclick="downloadCSV()">📊 EXCEL (CSV)</button>
+                    </div>
+                </div>
+
+                <!-- ISOLATED LIST VIEWS -->
+                <div id="adminViewStaffApprove" class="hidden section-box" style="border-left: 4px solid var(--admin-color);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; font-size:1.1rem;">🛡️ Pending Admin Approvals</h3>
+                        <button class="back-btn" style="margin:0; padding:4px 10px;" onclick="closeListView('master', 'adminViewStaffApprove')">✕</button>
+                    </div>
+                    <input type="text" class="search-bar" id="search-adminStaffApprove" placeholder="Search by name or email..." onkeyup="filterList('search-adminStaffApprove', 'adminStaffApprovalList')">
+                    <div id="adminStaffApprovalList" style="font-size: 0.95rem;"></div>
+                </div>
+
+                <div id="adminViewStaff" class="hidden section-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; font-size:1.1rem;">👥 Approved Admins</h3>
+                        <button class="back-btn" style="margin:0; padding:4px 10px;" onclick="closeListView('master', 'adminViewStaff')">✕</button>
+                    </div>
+                    <input type="text" class="search-bar" id="search-adminStaff" placeholder="Search by name or email..." onkeyup="filterList('search-adminStaff', 'adminStaffList')">
+                    <div id="adminStaffList" style="font-size: 0.95rem;"></div>
+                </div>
+
+                <div id="adminViewPending" class="hidden section-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; font-size:1.1rem;">Pending Student Auth</h3>
+                        <button class="back-btn" style="margin:0; padding:4px 10px;" onclick="closeListView('master', 'adminViewPending')">✕</button>
+                    </div>
+                    <input type="text" class="search-bar" id="search-adminPending" placeholder="Search by name, email or ID..." onkeyup="filterList('search-adminPending', 'adminPendingList')">
+                    <div id="adminPendingList" style="font-size: 0.95rem;"></div>
+                </div>
+
+                <div id="adminViewApproved" class="hidden section-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; font-size:1.1rem;">Active IIA Students</h3>
+                        <button class="back-btn" style="margin:0; padding:4px 10px;" onclick="closeListView('master', 'adminViewApproved')">✕</button>
+                    </div>
+                    <input type="text" class="search-bar" id="search-adminApproved" placeholder="Search by name, email or ID..." onkeyup="filterList('search-adminApproved', 'adminApprovedList')">
+                    <div id="adminApprovedList" style="font-size: 0.95rem;"></div>
+                </div>
+
+                <div id="adminViewPresent" class="hidden section-box" style="border-left: 4px solid var(--success);">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                        <h3 style="margin:0; font-size:1.1rem;">📍 Present in Venue</h3>
+                        <button class="back-btn" style="margin:0; padding:4px 10px;" onclick="closeListView('master', 'adminViewPresent')">✕</button>
+                    </div>
+                    <input type="text" class="search-bar" id="search-adminPresent" placeholder="Search by name, email or ID..." onkeyup="filterList('search-adminPresent', 'adminPresentList')">
+                    <div id="adminPresentList" style="font-size: 0.95rem;"></div>
+                </div>
+                
+                <!-- ISOLATED SCANNER BOX -->
+                <div id="adminScannerBox" class="scanner-box hidden">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h3 style="margin:0; font-size: 1.2rem;">📱 Master Scanner</h3>
+                        <button class="back-btn" style="margin:0; background: var(--danger); color: white; padding:4px 10px;" onclick="closeScanner('master')">✕</button>
+                    </div>
+                    <div id="master-reader" class="camera-view"></div>
+                    <button class="scan-btn" onclick="startCamera('master-reader', 'adminScanResult')" style="background-color: var(--success); border: none; color: white;">Start Camera</button>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <input type="text" id="adminScannerInput" placeholder="Simulate (Enter ID)" style="background: white; color: black; border:none; margin: 0; flex: 2;">
+                        <button class="scan-btn" onclick="processScan(document.getElementById('adminScannerInput').value, 'adminScanResult')" style="margin: 0; flex: 1;">Enter</button>
+                    </div>
+                    <div id="adminScanResult" class="status-msg hidden"></div>
+                </div>
+
+                <button id="btnMasterLogout" class="logout-btn" style="background-color: #ef4444; margin-top: 25px;" onclick="logout('admin')">LOCK DASHBOARD</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- === FOOTER SECTION === -->
+<footer class="app-footer">
+    <div class="about-tab" onclick="toggleAbout()">About 🔽</div>
+    <div id="aboutContent" class="about-content hidden">
+        <strong>Inside Inspiration Academy</strong><br>
+        -Founded by Biswajit Saha
+    </div>
+    
+    <!-- Footer Contextual Action Buttons -->
+    <div id="footerActionButtons" style="display:flex; flex-direction:column; align-items:center; margin-top: 10px;">
+        <button id="btnFooterVisitorChangePass" class="small-footer-btn btn-f-visitor hidden" onclick="toggleVisitorChangePass()">🔐 Change Password</button>
+        <button id="btnFooterStaffChangePass" class="small-footer-btn btn-f-staff hidden" onclick="toggleStaffChangePass()">🔐 Change Password</button>
+        <button id="btnFooterChangeCreds" class="small-footer-btn btn-f-master hidden" onclick="showChangeCredsForm()">🔐 Change Master Credentials</button>
+    </div>
+
+    <!-- Registered Visitors Counter -->
+    <div id="footerVisitorCount" class="hidden" style="display:flex; flex-direction:column; align-items:center;">
+        <div class="visitor-counter-box">
+            📈 Registered Students: <span id="totalVisitorCount">0</span>
+        </div>
+    </div>
+    
+    <div class="copyright" style="margin-top: 15px;">© Copyright by IIA ,2026</div>
+</footer>
+
+<!-- === MAIN APPLICATION SCRIPT === -->
 <script>
-    // 1. Initialize Firebase (আপনার প্রোজেক্টের ডিটেইলস)
+    // ==========================================
+    // 0. GOOGLE APPS SCRIPT EMAIL INTEGRATION
+    // ==========================================
+    const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwOlr10vcZomjqsYNGkBGLJBxaaGgRPw5Dgo9_zuGOxgjeyaY1E0QBkdUtVBjEAFn0v/exec"; 
+
+    function sendEmailNotification(email, name, passId) {
+        if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL === "https://script.google.com/macros/s/AKfycbwOlr10vcZomjqsYNGkBGLJBxaaGgRPw5Dgo9_zuGOxgjeyaY1E0QBkdUtVBjEAFn0v/exec") {
+            console.warn("GAS URL not set. Email notification skipped.");
+            return;
+        }
+
+        fetch(GAS_WEB_APP_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+                name: name,
+                id: passId,
+                appUrl: window.location.origin + window.location.pathname
+            })
+        }).catch(err => console.error('Error triggering email script:', err));
+    }
+
+    // ==========================================
+    // 0.5 BRUTE-FORCE PROTECTION (AUTO-LOCKOUT)
+    // ==========================================
+    const MAX_ATTEMPTS = 15;
+    const LOCKOUT_DURATION = 30 * 60 * 1000; // 30 minutes (in milliseconds)
+
+    function checkLockout() {
+        const lockoutUntil = localStorage.getItem('lockoutUntil');
+        if (lockoutUntil && Date.now() < parseInt(lockoutUntil)) {
+            const remainingMinutes = Math.ceil((parseInt(lockoutUntil) - Date.now()) / 60000);
+            Swal.fire({
+                icon: 'error',
+                title: 'Access Blocked 🔒',
+                text: `Too many failed login attempts! System is locked to prevent brute-force attacks. Try again in ${remainingMinutes} minutes.`,
+                allowOutsideClick: false
+            });
+            return true; 
+        }
+        if (lockoutUntil && Date.now() >= parseInt(lockoutUntil)) {
+            localStorage.removeItem('lockoutUntil');
+            localStorage.setItem('failedAttempts', '0');
+        }
+        return false;
+    }
+
+    function handleFailedAttempt() {
+        let attempts = parseInt(localStorage.getItem('failedAttempts') || '0');
+        attempts++;
+        localStorage.setItem('failedAttempts', attempts.toString());
+
+        if (attempts >= MAX_ATTEMPTS) {
+            localStorage.setItem('lockoutUntil', (Date.now() + LOCKOUT_DURATION).toString());
+            checkLockout(); 
+        }
+        
+        // Return remaining attempts so we can show warning UI
+        return MAX_ATTEMPTS - attempts;
+    }
+
+    function resetAttempts() {
+        localStorage.setItem('failedAttempts', '0');
+        localStorage.removeItem('lockoutUntil');
+    }
+
+    // --- EASTER EGG DOUBLE TAP LOGIC ---
+    let lastHeaderTap = 0;
+    function handleMasterHeaderTap(e) {
+        if (isAdminLoggedIn) return; 
+        
+        let currentTime = new Date().getTime();
+        let tapLength = currentTime - lastHeaderTap;
+        if (tapLength < 400 && tapLength > 0) {
+            const btn1 = document.getElementById('masterRecoveryBtn1');
+            const btn2 = document.getElementById('masterRecoveryBtn2');
+            if(btn1) btn1.classList.toggle('hidden');
+            if(btn2) btn2.classList.toggle('hidden');
+            if(e) e.preventDefault();
+        }
+        lastHeaderTap = currentTime;
+    }
+
+    // --- ADVANCED SECURITY: 15-MINUTE AUTO LOGOUT (INACTIVITY TIMEOUT) ---
+    let inactivityTime = function () {
+        let time;
+        window.onload = resetTimer;
+        document.onmousemove = resetTimer;
+        document.onkeypress = resetTimer;
+        document.ontouchstart = resetTimer;
+        document.onclick = resetTimer;
+
+        function logoutUser() {
+            if (currentVisitor) { logout('visitor'); showAlert(); }
+            else if (currentStaff) { logout('staff'); showAlert(); }
+            else if (isAdminLoggedIn) { logout('admin'); showAlert(); }
+            
+            function showAlert() {
+                Swal.fire('Session Expired', 'You have been automatically logged out due to 15 minutes of inactivity for security reasons.', 'warning');
+            }
+        }
+        function resetTimer() {
+            clearTimeout(time);
+            time = setTimeout(logoutUser, 900000); 
+        }
+    };
+    inactivityTime();
+
+    // --- PWA SERVICE WORKER SETUP ---
+    if ('serviceWorker' in navigator) {
+        const swCode = `
+            self.addEventListener('install', (e) => { e.waitUntil(self.skipWaiting()); });
+            self.addEventListener('activate', (e) => { e.waitUntil(self.clients.claim()); });
+            self.addEventListener('fetch', (e) => { });
+        `;
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(err => console.log('PWA SW failed:', err));
+    }
+
+    // --- OFFLINE MODE: SYNC LOGIC ---
+    let offlineScans = JSON.parse(localStorage.getItem('offlineScans')) || [];
+
+    function syncOfflineScans() {
+        if (navigator.onLine && offlineScans.length > 0) {
+            Swal.fire({
+                title: 'Syncing Offline Scans...',
+                text: `Syncing ${offlineScans.length} records to database.`,
+                icon: 'info',
+                toast: true, position: 'top-end', showConfirmButton: false, timer: 2000
+            });
+            
+            let updates = {};
+            offlineScans.forEach(scan => {
+                updates['iia_fest_data/tickets/' + scan.id + '/status'] = 'Used';
+                updates['iia_fest_data/tickets/' + scan.id + '/scannedBy'] = scan.scannedBy;
+                updates['iia_fest_data/tickets/' + scan.id + '/scanTime'] = scan.scanTime;
+            });
+            
+            db.ref().update(updates).then(() => {
+                offlineScans = [];
+                localStorage.removeItem('offlineScans');
+                Swal.fire({
+                    title: 'Synced Successfully!',
+                    text: 'All offline scans are now live.',
+                    icon: 'success',
+                    toast: true, position: 'top-end', showConfirmButton: false, timer: 3000
+                });
+            }).catch(e => console.error("Sync failed", e));
+        }
+    }
+    window.addEventListener('online', syncOfflineScans);
+
+    // --- PAGINATION & INFINITE SCROLL LOGIC ---
+    const infiniteScrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if(entry.isIntersecting) {
+                loadMoreListItems(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    function loadMoreListItems(triggerBtn) {
+        const container = triggerBtn.parentElement;
+        const hiddenItems = container.querySelectorAll('.infinite-item[style*="display: none"]');
+        
+        for(let i = 0; i < 20 && i < hiddenItems.length; i++) {
+            hiddenItems[i].style.display = '';
+        }
+        
+        if(hiddenItems.length <= 20) {
+            triggerBtn.style.display = 'none'; 
+        }
+    }
+
+    function applyInfiniteScroll() {
+        document.querySelectorAll('.load-more-trigger').forEach(trigger => {
+            infiniteScrollObserver.observe(trigger);
+        });
+    }
+
+    // Spinner utility for buttons
+    function setBtnLoading(btnId, isLoading, originalText = "") {
+        const btn = document.getElementById(btnId);
+        if(!btn) return;
+        if(isLoading) {
+            btn.dataset.originalText = btn.innerText;
+            btn.innerHTML = `Processing... <div class="spinner"></div>`;
+            btn.disabled = true;
+            btn.style.opacity = "0.7";
+        } else {
+            btn.innerText = originalText || btn.dataset.originalText || "Submit";
+            btn.disabled = false;
+            btn.style.opacity = "1";
+        }
+    }
+
+    // Live Search Filter utility
+    function filterList(inputId, listId) {
+        const input = document.getElementById(inputId).value.toLowerCase();
+        const items = document.getElementById(listId).getElementsByClassName('list-item');
+        for (let i = 0; i < items.length; i++) {
+            const text = items[i].innerText.toLowerCase();
+            items[i].style.display = text.includes(input) ? '' : 'none';
+        }
+    }
+
+    function reFilterAll() {
+        if(document.getElementById('search-adminStaffApprove')) filterList('search-adminStaffApprove', 'adminStaffApprovalList');
+        if(document.getElementById('search-adminStaff')) filterList('search-adminStaff', 'adminStaffList');
+        if(document.getElementById('search-adminPending')) filterList('search-adminPending', 'adminPendingList');
+        if(document.getElementById('search-adminApproved')) filterList('search-adminApproved', 'adminApprovedList');
+        if(document.getElementById('search-adminPresent')) filterList('search-adminPresent', 'adminPresentList');
+        if(document.getElementById('search-staffPending')) filterList('search-staffPending', 'staffPendingList');
+        if(document.getElementById('search-staffApproved')) filterList('search-staffApproved', 'staffApprovedList');
+    }
+
+    // ==========================================
+    // 0. SECURITY & HASHING ENGINE (For Master Admin)
+    // ==========================================
+    function hashData(text) {
+        return CryptoJS.SHA256(text).toString();
+    }
+
+    // ==========================================
+    // 1. FIREBASE CLOUD DATABASE CONFIGURATION
+    // ==========================================
     const firebaseConfig = {
       apiKey: "AIzaSyAvtM_LmkN4oXlQ7_wojG8CunUuw6lbt7Y",
       authDomain: "iia-fest.firebaseapp.com",
+      databaseURL: "https://iia-fest-default-rtdb.firebaseio.com",
       projectId: "iia-fest",
       storageBucket: "iia-fest.firebasestorage.app",
       messagingSenderId: "111712260847",
-      appId: "1:111712260847:web:667572c9309a011b02811a"
+      appId: "1:111712260847:web:667572c9309a011b02811a",
+      measurementId: "G-M1SHTJ5LF1"
     };
-    firebase.initializeApp(firebaseConfig);
+    
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.database();
     const auth = firebase.auth();
+
+    // ==========================================
+    // 2. GLOBAL STATE
+    // ==========================================
+    let visitors = []; 
+    let staffMembers = []; 
+    let tickets = [];  
+    let prevMasterPendingCount = 0;
+    let prevStaffPendingCount = 0;
+    let localSessionId = null; 
+
+    let masterCredentials = null;
+    
+    let currentVisitor = null; 
+    let currentStaff = null;
+    let isAdminLoggedIn = false;
+
+    db.ref('iia_fest_data/masterCredentials').on('value', (snapshot) => {
+        if(snapshot.val()) {
+            const data = snapshot.val();
+            if(isAdminLoggedIn && data.sessionId && data.sessionId !== localSessionId) {
+                Swal.fire({
+                    title: 'Session Terminated',
+                    text: 'Master Admin account was accessed from another device. For your security, this session has been logged out.',
+                    icon: 'error',
+                    allowOutsideClick: false
+                });
+                logout('admin');
+                return;
+            }
+            masterCredentials = data;
+        } else {
+            masterCredentials = null;
+        }
+    });
+
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            db.ref('iia_fest_data/users/' + user.uid).on('value', (snapshot) => {
+                const userData = snapshot.val();
+                if(userData) {
+                    if (userData.sessionId && localSessionId && userData.sessionId !== localSessionId) {
+                        Swal.fire({
+                            title: 'Session Terminated',
+                            text: 'Your account was logged in from another device. For your security, this session has been logged out.',
+                            icon: 'error',
+                            allowOutsideClick: false
+                        });
+                        auth.signOut();
+                        return;
+                    }
+                    if (!localSessionId && userData.sessionId) {
+                        localSessionId = userData.sessionId;
+                    }
+
+                    if (userData.role === 'visitor') {
+                        currentVisitor = userData;
+                        currentVisitor.email = user.email;
+                        showVisitorDashboard();
+                        loadTickets(); 
+                    } else if (userData.role === 'staff') {
+                        currentStaff = userData;
+                        currentStaff.email = user.email;
+                        if(currentStaff.status === 'Approved') {
+                            showStaffDashboard();
+                            loadAllTicketsAndUsers(); 
+                            syncOfflineScans();
+                        } else {
+                            if(document.getElementById('view-staff').classList.contains('active')) {
+                                Swal.fire({icon: 'info', title: 'Pending', text: 'Account pending Master Approval. Check back later.'});
+                            }
+                            auth.signOut();
+                        }
+                    }
+                }
+            });
+        }
+    });
+    
+    document.addEventListener("DOMContentLoaded", () => {
+        if (auth.isSignInWithEmailLink(window.location.href)) {
+            let email = window.localStorage.getItem('emailForSignIn');
+            if (!email) {
+                Swal.fire({
+                    title: 'Email Required',
+                    text: 'Please provide the Master Admin email for confirmation:',
+                    input: 'email',
+                    showCancelButton: false,
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if(result.value) processEmailLink(result.value);
+                });
+            } else {
+                processEmailLink(email);
+            }
+            
+            function processEmailLink(em) {
+                auth.signInWithEmailLink(em, window.location.href)
+                .then((result) => {
+                    window.localStorage.removeItem('emailForSignIn');
+                    if (em === "iamdarsan.ai@gmail.com") {
+                        Swal.fire('Verified!', 'Master Email Verified! You can now securely set or reset the Master Credentials.', 'success');
+                        switchView('view-admin');
+                        document.getElementById('admin2FASection').classList.add('hidden');
+                        document.getElementById('adminAuthSection').classList.add('hidden');
+                        document.getElementById('adminResetVerifySection').classList.add('hidden');
+                        document.getElementById('adminSignupSection').classList.remove('hidden');
+                    } else {
+                        Swal.fire('Error', 'Unauthorized email address.', 'error');
+                        auth.signOut();
+                    }
+                })
+                .catch((error) => Swal.fire('Error', error.message, 'error'));
+            }
+        }
+    });
+
+    function loadTickets() {
+        db.ref('iia_fest_data/tickets').on('value', (snapshot) => {
+            const data = snapshot.val();
+            tickets = data ? Object.values(data) : [];
+            if(currentVisitor) updateVisitorUI();
+        });
+    }
+
+    function loadAllTicketsAndUsers() {
+        db.ref('iia_fest_data/tickets').on('value', (snapshot) => {
+            const data = snapshot.val();
+            tickets = data ? Object.values(data) : [];
+            if(currentStaff) updateStaffUI();
+            if(isAdminLoggedIn) updateAdminUI();
+        });
+        db.ref('iia_fest_data/users').on('value', (snapshot) => {
+            const allUsers = snapshot.val() || {};
+            visitors = []; staffMembers = [];
+            for (let uid in allUsers) {
+                if(allUsers[uid].role === 'visitor') visitors.push(allUsers[uid]);
+                if(allUsers[uid].role === 'staff') {
+                    let st = allUsers[uid]; st.uid = uid;
+                    staffMembers.push(st);
+                }
+            }
+            if(currentStaff) updateStaffUI();
+            if(isAdminLoggedIn) updateAdminUI();
+            updateFooterVisibility();
+        });
+    }
+
+    // ==========================================
+    // 3. UI, SCANNER & LIST VIEW LOGIC
+    // ==========================================
+    
+    function openScanner(role) {
+        if(role === 'staff') {
+            document.getElementById('staffMenu').classList.add('hidden');
+            document.getElementById('staffScannerBox').classList.remove('hidden');
+            document.getElementById('btnStaffLogout').classList.add('hidden');
+        } else if (role === 'master') {
+            document.getElementById('masterMenu').classList.add('hidden');
+            document.getElementById('adminScannerBox').classList.remove('hidden');
+            document.getElementById('btnMasterLogout').classList.add('hidden');
+        }
+        updateFooterVisibility();
+    }
+
+    function closeScanner(role) {
+        if(html5QrCode && html5QrCode.isScanning) {
+            html5QrCode.stop().then(() => { html5QrCode.clear(); }).catch(e => {});
+        }
+        if(role === 'staff') {
+            document.getElementById('staffScannerBox').classList.add('hidden');
+            document.getElementById('staffMenu').classList.remove('hidden');
+            document.getElementById('staffScanResult').classList.add('hidden');
+            document.getElementById('btnStaffLogout').classList.remove('hidden');
+        } else if (role === 'master') {
+            document.getElementById('adminScannerBox').classList.add('hidden');
+            document.getElementById('masterMenu').classList.remove('hidden');
+            document.getElementById('adminScanResult').classList.add('hidden');
+            document.getElementById('btnMasterLogout').classList.remove('hidden');
+        }
+        updateFooterVisibility(); 
+    }
+
+    function openListView(role, viewId) {
+        if(role === 'staff') {
+            document.getElementById('staffMenu').classList.add('hidden');
+            document.getElementById(viewId).classList.remove('hidden');
+            document.getElementById('btnStaffLogout').classList.add('hidden');
+            document.getElementById('search-' + viewId.replace('View', '')).value = '';
+            filterList('search-' + viewId.replace('View', ''), viewId.replace('View', '') + 'List');
+        } else if (role === 'master') {
+            document.getElementById('masterMenu').classList.add('hidden');
+            document.getElementById(viewId).classList.remove('hidden');
+            document.getElementById('btnMasterLogout').classList.add('hidden');
+            document.getElementById('search-' + viewId.replace('View', '')).value = '';
+            filterList('search-' + viewId.replace('View', ''), viewId.replace('View', '') + 'List');
+        }
+        updateFooterVisibility();
+    }
+
+    function closeListView(role, viewId) {
+        if(role === 'staff') {
+            document.getElementById(viewId).classList.add('hidden');
+            document.getElementById('staffMenu').classList.remove('hidden');
+            document.getElementById('btnStaffLogout').classList.remove('hidden');
+        } else if (role === 'master') {
+            document.getElementById(viewId).classList.add('hidden');
+            document.getElementById('masterMenu').classList.remove('hidden');
+            document.getElementById('btnMasterLogout').classList.remove('hidden');
+        }
+        updateFooterVisibility();
+    }
+
+    let adminIconTimer = null;
+    function handleAdminIconClick() {
+        if (adminIconTimer === null) {
+            adminIconTimer = setTimeout(() => {
+                adminIconTimer = null;
+                document.getElementById('welcomeOverlay').classList.remove('hidden');
+                setTimeout(() => { document.getElementById('welcomeOverlay').classList.add('active'); }, 10);
+            }, 300);
+        } else {
+            clearTimeout(adminIconTimer);
+            adminIconTimer = null;
+            switchView('view-admin');
+        }
+    }
+
+    function hideWelcomeScreen() {
+        document.getElementById('welcomeOverlay').classList.remove('active');
+        setTimeout(() => { document.getElementById('welcomeOverlay').classList.add('hidden'); }, 400); 
+    }
+
+    function updateFooterVisibility() {
+        const counterDiv = document.getElementById('footerVisitorCount');
+        const countSpan = document.getElementById('totalVisitorCount');
+        
+        const masterBtn = document.getElementById('btnFooterChangeCreds');
+        const visitorBtn = document.getElementById('btnFooterVisitorChangePass');
+        const staffBtn = document.getElementById('btnFooterStaffChangePass');
+
+        masterBtn.classList.add('hidden');
+        visitorBtn.classList.add('hidden');
+        staffBtn.classList.add('hidden');
+        counterDiv.classList.add('hidden');
+
+        const activeView = document.querySelector('.view-section.active').id;
+
+        if (isAdminLoggedIn) {
+            const isMenuVisible = !document.getElementById('masterMenu').classList.contains('hidden');
+            const isDashboardActive = !document.getElementById('adminDashboard').classList.contains('hidden');
+            
+            if (activeView === 'view-admin' && isDashboardActive && isMenuVisible) {
+                masterBtn.classList.remove('hidden');
+            }
+            if (activeView === 'view-admin' || activeView === 'view-staff') {
+                countSpan.innerText = visitors.length;
+                counterDiv.classList.remove('hidden');
+            }
+        } else if (currentStaff && currentStaff.status === 'Approved') {
+            const isStaffMenuVisible = !document.getElementById('staffMenu').classList.contains('hidden');
+            const isStaffDashActive = !document.getElementById('staffDashboard').classList.contains('hidden');
+
+            if (activeView === 'view-staff' && isStaffDashActive && isStaffMenuVisible) {
+                staffBtn.classList.remove('hidden');
+            }
+            if (activeView === 'view-admin' || activeView === 'view-staff') {
+                countSpan.innerText = visitors.length;
+                counterDiv.classList.remove('hidden');
+            }
+        } else if (currentVisitor) {
+            visitorBtn.classList.add('hidden');
+        }
+    }
+
+    function toggleAbout() {
+        const content = document.getElementById('aboutContent');
+        const tab = document.querySelector('.about-tab');
+        if(content.classList.contains('hidden')) {
+            content.classList.remove('hidden'); tab.innerText = "About 🔼";
+        } else {
+            content.classList.add('hidden'); tab.innerText = "About 🔽";
+        }
+    }
 
     function togglePassword(fieldId, btn) {
         const input = document.getElementById(fieldId);
@@ -199,65 +1497,1242 @@
         else { input.type = "password"; btn.innerText = "👁️"; }
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-        // 2. URL থেকে সিক্রেট কোড (oobCode) বের করা
-        const urlParams = new URLSearchParams(window.location.search);
-        const actionCode = urlParams.get('oobCode');
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeToggle');
+        body.classList.toggle('dark-mode');
+        btn.innerText = body.classList.contains('dark-mode') ? '☀️' : '🌙';
+    }
 
-        if (!actionCode) {
-            Swal.fire({ icon: 'error', title: 'Invalid Link', text: 'The security reset link is missing, invalid, or has expired.', allowOutsideClick: false });
-            document.getElementById('resetBtn').disabled = true;
-            document.getElementById('userEmailDisplay').innerText = "Access Denied.";
+    function switchView(viewId) {
+        document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+        document.getElementById(viewId).classList.add('active');
+        if(html5QrCode && html5QrCode.isScanning) { html5QrCode.stop().then(() => { html5QrCode.clear(); }).catch(e => {}); }
+        
+        if(document.getElementById('masterRecoveryBtn1')) document.getElementById('masterRecoveryBtn1').classList.add('hidden');
+        if(document.getElementById('masterRecoveryBtn2')) document.getElementById('masterRecoveryBtn2').classList.add('hidden');
+        
+        updateFooterVisibility();
+    }
+
+    function toggleAuth(role, type) {
+        document.querySelectorAll('.status-msg.msg-error').forEach(el => el.classList.add('hidden'));
+        
+        const capRole = role.charAt(0).toUpperCase() + role.slice(1);
+        const formLogin = document.getElementById(`form${capRole}Login`);
+        const formSignup = document.getElementById(`form${capRole}Signup`);
+        const formForgot = document.getElementById(`form${capRole}Forgot`);
+
+        if(formLogin) formLogin.classList.add('hidden');
+        if(formSignup) formSignup.classList.add('hidden');
+        if(formForgot) formForgot.classList.add('hidden');
+
+        if (type === 'signup' && formSignup) {
+            formSignup.classList.remove('hidden');
+        } else if (type === 'forgot' && formForgot) {
+            formForgot.classList.remove('hidden');
+        } else if (formLogin) {
+            formLogin.classList.remove('hidden');
+        }
+    }
+
+    function logout(role) {
+        if(role === 'visitor' || role === 'staff') {
+            auth.signOut().then(() => {
+                currentVisitor = null; currentStaff = null; localSessionId = null;
+                document.getElementById(`${role}Dashboard`).classList.add('hidden');
+                document.getElementById(`${role}AuthSection`).classList.remove('hidden');
+                
+                if(role === 'visitor') document.getElementById('vChangePassSection').classList.add('hidden');
+                if(role === 'staff') {
+                    closeScanner('staff');
+                    closeListView('staff', 'staffViewPending');
+                    closeListView('staff', 'staffViewApproved');
+                    document.getElementById('sChangePassSection').classList.add('hidden');
+                }
+                
+                toggleAuth(role, 'login');
+                updateFooterVisibility();
+            });
+        } else if (role === 'admin') {
+            isAdminLoggedIn = false;
+            localSessionId = null;
+            closeScanner('master');
+            closeListView('master', 'adminViewStaffApprove');
+            closeListView('master', 'adminViewStaff');
+            closeListView('master', 'adminViewPending');
+            closeListView('master', 'adminViewApproved');
+            closeListView('master', 'adminViewPresent');
+            document.getElementById('adminDashboard').classList.add('hidden');
+            document.getElementById('adminAuthSection').classList.add('hidden');
+            document.getElementById('adminChangeCredsSection').classList.add('hidden');
+            
+            document.getElementById('aLoginUser').value = '';
+            document.getElementById('aLoginPass').value = '';
+            document.getElementById('aLoginPin').value = '';
+            document.getElementById('admin2FASection').classList.remove('hidden');
+            
+            document.getElementById('masterRecoveryBtn1').classList.add('hidden');
+            document.getElementById('masterRecoveryBtn2').classList.add('hidden');
+            
+            updateFooterVisibility();
+        }
+    }
+
+    function updateFirebaseUserPassword(newPass, confirmPass, errorElementId, successCallback, btnId) {
+        const err = document.getElementById(errorElementId);
+        if (!newPass || !confirmPass) { err.innerText = "Please fill in all fields."; err.classList.remove('hidden'); return; }
+        if (newPass !== confirmPass) { err.innerText = "Passwords do not match."; err.classList.remove('hidden'); return; }
+        if (newPass.length < 6) { err.innerText = "Password must be at least 6 characters."; err.classList.remove('hidden'); return; }
+        
+        err.classList.add('hidden');
+        const user = auth.currentUser;
+        if (user) {
+            setBtnLoading(btnId, true);
+            user.updatePassword(newPass).then(() => {
+                setBtnLoading(btnId, false, "Update Password");
+                Swal.fire('Updated!', 'Password successfully updated!', 'success');
+                successCallback(); 
+            }).catch((error) => {
+                setBtnLoading(btnId, false, "Update Password");
+                if (error.code === 'auth/requires-recent-login') {
+                    err.innerText = "Security Alert: Your session is too old. Please log out and log back in to change your password.";
+                } else {
+                    err.innerText = error.message;
+                }
+                err.classList.remove('hidden');
+            });
+        }
+    }
+
+    // --- STUDENT REGISTRATION (Firebase Auth) ---
+    document.getElementById('formVisitorSignup').addEventListener('submit', e => {
+        e.preventDefault();
+        setBtnLoading('btnSignupVisitor', true);
+        const n = document.getElementById('vSignupName').value.trim();
+        const eMail = document.getElementById('vSignupEmail').value.trim();
+        const pRaw = document.getElementById('vSignupPass').value;
+        
+        auth.createUserWithEmailAndPassword(eMail, pRaw)
+        .then((userCredential) => {
+            const uid = userCredential.user.uid;
+            db.ref('iia_fest_data/users/' + uid).set({ name: n, email: eMail, role: 'visitor' });
+            e.target.reset();
+            setBtnLoading('btnSignupVisitor', false, "Sign Up");
+        })
+        .catch((error) => {
+            setBtnLoading('btnSignupVisitor', false, "Sign Up");
+            const err = document.getElementById('vSignupError');
+            err.innerText = error.message; err.classList.remove('hidden');
+        });
+    });
+
+    // --- STUDENT LOGIN (Firebase Auth) ---
+    document.getElementById('formVisitorLogin').addEventListener('submit', e => {
+        e.preventDefault();
+        if (checkLockout()) return; 
+
+        setBtnLoading('btnLoginVisitor', true);
+        const eMail = document.getElementById('vLoginEmail').value;
+        const pRaw = document.getElementById('vLoginPass').value;
+
+        auth.signInWithEmailAndPassword(eMail, pRaw)
+        .then((cred) => {
+            resetAttempts(); 
+            localSessionId = Date.now().toString();
+            db.ref('iia_fest_data/users/' + cred.user.uid).update({ sessionId: localSessionId });
+
+            e.target.reset(); 
+            setBtnLoading('btnLoginVisitor', false, "Log In");
+        })
+        .catch((error) => {
+            let attemptsLeft = handleFailedAttempt(); 
+            setBtnLoading('btnLoginVisitor', false, "Log In");
+            
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-login-credentials') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Account Does Not Exist',
+                    text: 'We could not find an account with this email. Please sign up first!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#0284c7',
+                    cancelButtonColor: '#64748b',
+                    confirmButtonText: 'Sign Up Now',
+                    cancelButtonText: 'Try Again'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        toggleAuth('visitor', 'signup'); 
+                    }
+                });
+            } else {
+                const errBox = document.getElementById('vLoginError');
+                let errMsg = "Incorrect Password or Error: " + error.message;
+                if (attemptsLeft <= 5 && attemptsLeft > 0) {
+                    errMsg += `<br><span style="font-size: 0.85rem; margin-top:5px; display:block; color: #ef4444;">⚠️ Warning: Only ${attemptsLeft} attempt(s) left before lockout.</span>`;
+                }
+                errBox.innerHTML = errMsg;
+                errBox.classList.remove('hidden'); 
+            }
+        });
+    });
+
+    // --- STUDENT FORGOT PASSWORD ---
+    document.getElementById('formVisitorForgot').addEventListener('submit', e => {
+        e.preventDefault();
+        setBtnLoading('btnForgotVisitor', true);
+        const eMail = document.getElementById('vForgotEmail').value.trim();
+
+        auth.sendPasswordResetEmail(eMail)
+        .then(() => {
+            setBtnLoading('btnForgotVisitor', false, "Send Reset Link");
+            Swal.fire('Sent!', 'A secure reset link has been sent to your email!', 'success');
+            e.target.reset(); toggleAuth('visitor', 'login');
+        })
+        .catch((error) => {
+            setBtnLoading('btnForgotVisitor', false, "Send Reset Link");
+            const err = document.getElementById('vForgotError');
+            err.innerText = "Error: Ensure the email is registered."; err.classList.remove('hidden');
+        });
+    });
+
+    function toggleVisitorChangePass() {
+        const sec = document.getElementById('vChangePassSection');
+        if (sec.classList.contains('hidden')) {
+            sec.classList.remove('hidden');
+            document.getElementById('vChangePassError').classList.add('hidden');
+            document.getElementById('vNewPassInput').value = '';
+            document.getElementById('vConfirmPassInput').value = '';
+            sec.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
+        } else {
+            sec.classList.add('hidden');
+        }
+    }
+
+    function submitVisitorPasswordChange() {
+        const p1 = document.getElementById('vNewPassInput').value;
+        const p2 = document.getElementById('vConfirmPassInput').value;
+        updateFirebaseUserPassword(p1, p2, 'vChangePassError', toggleVisitorChangePass, 'btnUpdatePassVisitor');
+    }
+
+    function showVisitorDashboard() {
+        document.getElementById('visitorAuthSection').classList.add('hidden');
+        document.getElementById('visitorDashboard').classList.remove('hidden');
+        document.getElementById('vWelcomeMsg').innerText = `Welcome, ${currentVisitor.name}!`;
+        updateFooterVisibility();
+    }
+
+    function updateVisitorUI() {
+        const tkt = tickets.find(t => t.email === currentVisitor.email);
+        const btn = document.getElementById('btnRequestPass');
+        const disp = document.getElementById('userTicketDisplay');
+        const badge = document.getElementById('tktStatus');
+        const qrBox = document.getElementById('tktQrContainer');
+        const foodSec = document.getElementById('foodPreferenceSection');
+
+        if (!tkt) {
+            btn.classList.remove('hidden'); 
+            foodSec.classList.remove('hidden');
+            disp.classList.add('hidden');
+            document.getElementById('foodPrefSelect').value = '';
+            document.getElementById('foodPrefError').classList.add('hidden');
+        } else {
+            btn.classList.add('hidden'); 
+            foodSec.classList.add('hidden');
+            disp.classList.remove('hidden');
+            
+            document.getElementById('tktName').innerText = tkt.name;
+            document.getElementById('passAvatar').innerText = tkt.name.charAt(0).toUpperCase();
+
+            if (tkt.status === 'Pending') {
+                badge.innerText = 'Pending Approval'; badge.className = 'status-badge bg-pending'; qrBox.classList.add('hidden');
+            } else if (tkt.status === 'Approved') {
+                badge.innerText = 'Pass Authorized'; badge.className = 'status-badge bg-success'; qrBox.classList.remove('hidden');
+                new QRious({ element: document.getElementById('qrCanvas'), value: tkt.id, size: 200, level: 'H' });
+            } else if (tkt.status === 'Used') {
+                badge.innerText = 'Pass Used (Entry Verified)'; badge.className = 'status-badge'; badge.style.background = 'var(--border-color)'; badge.style.color = 'var(--text-main)'; qrBox.classList.remove('hidden'); 
+            } else if (tkt.status === 'Revoked') {
+                badge.innerText = 'Pass Revoked'; badge.className = 'status-badge bg-danger'; qrBox.classList.add('hidden');
+            }
+        }
+    }
+
+    function requestTicket() {
+        const now = Date.now();
+        const lastReq = localStorage.getItem('lastRequestTime');
+        if (lastReq && (now - lastReq < 60000)) { 
+            Swal.fire('Please Wait', 'To prevent spam, you can only request a pass once per minute. Please try again shortly.', 'warning');
             return;
         }
 
-        // 3. কোডটি ভেরিফাই করে ইমেইল দেখানো
-        auth.verifyPasswordResetCode(actionCode).then((email) => {
-            document.getElementById('userEmailDisplay').innerHTML = `Authorized for:<br> <span style="color:#00f0ff; font-weight:bold;">${email}</span>`;
-        }).catch((error) => {
-            Swal.fire('Error', 'Invalid or expired secure link. Please request a new one from the portal.', 'error');
-            document.getElementById('resetBtn').disabled = true;
-            document.getElementById('userEmailDisplay').innerText = "Link Expired.";
-        });
+        const foodPref = document.getElementById('foodPrefSelect').value;
+        const err = document.getElementById('foodPrefError');
+        
+        if (!foodPref) { err.classList.remove('hidden'); return; }
+        err.classList.add('hidden');
 
-        // 4. ফর্ম সাবমিট ও পাসওয়ার্ড আপডেট লজিক
-        document.getElementById('formResetPass').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const p1 = document.getElementById('newPass').value;
-            const p2 = document.getElementById('confirmPass').value;
-            const errBox = document.getElementById('resetError');
-
-            if(p1.length < 6) {
-                errBox.innerText = "Password must be at least 6 characters.";
-                errBox.classList.remove('hidden'); return;
-            }
-            if(p1 !== p2) {
-                errBox.innerText = "Passwords do not match.";
-                errBox.classList.remove('hidden'); return;
-            }
-            
-            errBox.classList.add('hidden');
-            const btn = document.getElementById('resetBtn');
-            btn.innerHTML = 'Processing... <div class="spinner"></div>';
-            btn.disabled = true;
-
-            auth.confirmPasswordReset(actionCode, p1).then(() => {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'System Updated!',
-                    text: 'Your security key has been changed successfully. You can now log into the portal.',
-                    confirmButtonColor: '#00f0ff',
-                    confirmButtonText: '<span style="color:#000; font-weight:bold;">Go to Login</span>'
-                }).then(() => {
-                    window.location.href = 'index.html'; 
-                });
-            }).catch((error) => {
-                errBox.innerText = error.message;
-                errBox.classList.remove('hidden');
-                btn.innerText = 'Update Security Key';
-                btn.disabled = false;
+        const newId = 'TD26-' + Math.floor(Math.random() * 90000 + 10000);
+        db.ref('iia_fest_data/tickets/' + newId).set({
+            id: newId, 
+            email: currentVisitor.email, 
+            name: currentVisitor.name, 
+            foodPreference: foodPref,
+            status: 'Pending'
+        }).then(() => {
+            localStorage.setItem('lastRequestTime', now);
+            Swal.fire({
+                title: 'Requested!',
+                text: 'Your Pass request has been submitted for approval.',
+                icon: 'success',
+                confirmButtonColor: '#10b981'
             });
+        }).catch((e) => Swal.fire('Error', e.message, 'error'));
+    }
+
+    // --- DOWNLOAD PASS PNG (DYNAMIC ID CARD) ---
+    function downloadPassAsPNG() {
+        const tkt = tickets.find(t => t.email === currentVisitor.email);
+        if(!tkt || tkt.status !== 'Approved') return;
+
+        const qrCanvas = document.getElementById('qrCanvas');
+        if(!qrCanvas) return;
+
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 400;
+        canvas.height = 650;
+
+        let gradient = ctx.createLinearGradient(0, 0, 400, 650);
+        gradient.addColorStop(0, '#0f172a');
+        gradient.addColorStop(1, '#1e293b');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(10, 10, 380, 630);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 26px "Segoe UI", Helvetica, Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('TEACHERS DAY 2K26', 200, 50);
+        
+        ctx.fillStyle = '#38bdf8'; 
+        ctx.font = '700 16px "Segoe UI", Helvetica, Arial, sans-serif';
+        ctx.fillText('IIA STUDENT PASS', 200, 75);
+
+        ctx.beginPath();
+        ctx.arc(200, 145, 45, 0, Math.PI * 2);
+        ctx.fillStyle = '#0284c7';
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 40px "Segoe UI", Helvetica, Arial, sans-serif';
+        ctx.fillText(tkt.name.charAt(0).toUpperCase(), 200, 160);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 24px "Segoe UI", Helvetica, Arial, sans-serif';
+        ctx.fillText(tkt.name, 200, 225);
+
+        ctx.fillStyle = '#cbd5e1';
+        ctx.font = '500 16px "Segoe UI", Helvetica, Arial, sans-serif';
+        ctx.fillText('Venue: Mohit Moitra Mancha', 200, 255);
+        ctx.fillText('Date: 10 October 2026, (Mahalaya)', 200, 275);
+        ctx.fillText('Time: 11:30 AM', 200, 295);
+        
+        ctx.fillStyle = '#f59e0b'; 
+        ctx.font = 'bold 16px "Segoe UI", Helvetica, Arial, sans-serif';
+        ctx.fillText('Food: ' + (tkt.foodPreference || 'N/A'), 200, 320);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        if(ctx.roundRect) {
+            ctx.roundRect(100, 345, 200, 200, 16);
+        } else {
+            ctx.rect(100, 345, 200, 200); 
+        }
+        ctx.fill();
+
+        ctx.drawImage(qrCanvas, 110, 355, 180, 180);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = 'italic 12px "Segoe UI", Helvetica, Arial, sans-serif';
+        const now = new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+        ctx.fillText('Downloaded on: ' + now, 200, 580);
+        ctx.fillText('Inside Inspiration Academy', 200, 600);
+
+        const link = document.createElement('a');
+        link.download = tkt.name.replace(/\s+/g, '_') + '_IIA_Pass.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+    }
+
+    // --- ADMIN AUTHENTICATION (Firebase Auth) ---
+    document.getElementById('formStaffSignup').addEventListener('submit', e => {
+        e.preventDefault();
+        setBtnLoading('btnSignupStaff', true);
+        const n = document.getElementById('sSignupName').value.trim();
+        const eMail = document.getElementById('sSignupEmail').value.trim();
+        const pRaw = document.getElementById('sSignupPass').value;
+        
+        auth.createUserWithEmailAndPassword(eMail, pRaw)
+        .then((userCredential) => {
+            const uid = userCredential.user.uid;
+            db.ref('iia_fest_data/users/' + uid).set({ name: n, email: eMail, role: 'staff', status: 'Pending' });
+            e.target.reset();
+            setBtnLoading('btnSignupStaff', false, "Register for Approval");
+            Swal.fire('Submitted!', 'Registration submitted! Please wait for Master Admin approval before logging back in.', 'success');
+            auth.signOut();
+            toggleAuth('staff', 'login');
+        })
+        .catch((error) => {
+            setBtnLoading('btnSignupStaff', false, "Register for Approval");
+            const err = document.getElementById('sSignupError');
+            err.innerText = error.message;
+            err.classList.remove('hidden');
         });
+    });
+
+    // --- ADMIN LOGIN (Firebase Auth) ---
+    document.getElementById('formStaffLogin').addEventListener('submit', e => {
+        e.preventDefault();
+        if (checkLockout()) return; 
+
+        setBtnLoading('btnLoginStaff', true);
+        const eMail = document.getElementById('sLoginEmail').value;
+        const pRaw = document.getElementById('sLoginPass').value;
+
+        auth.signInWithEmailAndPassword(eMail, pRaw)
+        .then((cred) => {
+            resetAttempts(); 
+            localSessionId = Date.now().toString();
+            db.ref('iia_fest_data/users/' + cred.user.uid).update({ sessionId: localSessionId });
+
+            e.target.reset();
+            setBtnLoading('btnLoginStaff', false, "Log In");
+        })
+        .catch((error) => {
+            let attemptsLeft = handleFailedAttempt(); 
+            setBtnLoading('btnLoginStaff', false, "Log In");
+            
+            if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential' || error.code === 'auth/invalid-login-credentials') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Admin Not Found',
+                    text: 'No registered admin found with this email. Please register first!',
+                    showCancelButton: true,
+                    confirmButtonColor: '#059669',
+                    cancelButtonColor: '#64748b',
+                    confirmButtonText: 'Register Now',
+                    cancelButtonText: 'Try Again'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        toggleAuth('staff', 'signup'); 
+                    }
+                });
+            } else {
+                const errBox = document.getElementById('sLoginError');
+                let errMsg = "Invalid Password or awaiting Master Approval.";
+                if (attemptsLeft <= 5 && attemptsLeft > 0) {
+                    errMsg += `<br><span style="font-size: 0.85rem; margin-top:5px; display:block; color: #ef4444;">⚠️ Warning: Only ${attemptsLeft} attempt(s) left before lockout.</span>`;
+                }
+                errBox.innerHTML = errMsg;
+                errBox.classList.remove('hidden'); 
+            }
+        });
+    });
+
+    // --- ADMIN FORGOT PASSWORD ---
+    document.getElementById('formStaffForgot').addEventListener('submit', e => {
+        e.preventDefault();
+        setBtnLoading('btnForgotStaff', true);
+        const eMail = document.getElementById('sForgotEmail').value.trim();
+
+        auth.sendPasswordResetEmail(eMail)
+        .then(() => {
+            setBtnLoading('btnForgotStaff', false, "Send Reset Link");
+            Swal.fire('Sent!', 'A secure reset link has been sent to your admin email!', 'success');
+            e.target.reset();
+            toggleAuth('staff', 'login');
+        })
+        .catch((error) => {
+            setBtnLoading('btnForgotStaff', false, "Send Reset Link");
+            const err = document.getElementById('sForgotError');
+            err.innerText = "Error: Ensure the email is registered.";
+            err.classList.remove('hidden');
+        });
+    });
+
+    function toggleStaffChangePass() {
+        const sec = document.getElementById('sChangePassSection');
+        if (sec.classList.contains('hidden')) {
+            sec.classList.remove('hidden');
+            document.getElementById('sChangePassError').classList.add('hidden');
+            document.getElementById('sNewPassInput').value = '';
+            document.getElementById('sConfirmPassInput').value = '';
+            sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            sec.classList.add('hidden');
+        }
+    }
+
+    function submitStaffPasswordChange() {
+        const p1 = document.getElementById('sNewPassInput').value;
+        const p2 = document.getElementById('sConfirmPassInput').value;
+        updateFirebaseUserPassword(p1, p2, 'sChangePassError', toggleStaffChangePass, 'btnUpdatePassStaff');
+    }
+
+    function showStaffDashboard() {
+        document.getElementById('staffAuthSection').classList.add('hidden');
+        document.getElementById('staffDashboard').classList.remove('hidden');
+        document.getElementById('sWelcomeMsg').innerText = `Admin: ${currentStaff.name}`;
+        updateFooterVisibility();
+    }
+
+    function updateStaffUI() {
+        if(!currentStaff) return;
+        
+        let pendingStudents = tickets.filter(t => t.status === 'Pending').length;
+        let approvedStudents = tickets.filter(t => t.status === 'Approved').length;
+
+        document.getElementById('badge-staff-pendStudent').innerText = pendingStudents;
+        document.getElementById('badge-staff-appStudent').innerText = approvedStudents;
+        
+        const badgeElem = document.getElementById('badge-staff-pendStudent');
+        if (pendingStudents > 2) {
+            badgeElem.classList.add('badge-alert');
+            if (pendingStudents > prevStaffPendingCount) {
+                Swal.fire({
+                    title: 'Smart Notification Alert 🔔',
+                    text: `${pendingStudents} students are waiting for pass approval!`,
+                    icon: 'info',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                });
+            }
+        } else {
+            badgeElem.classList.remove('badge-alert');
+        }
+        prevStaffPendingCount = pendingStudents;
+
+        renderTicketLists('staffPendingList', 'staffApprovedList');
+        reFilterAll();
+    }
+
+    // --- MASTER ADMIN LOGIC ---
+    function verifyAdminPin() {
+        if (checkLockout()) return; 
+
+        if (!masterCredentials) {
+            Swal.fire('Setup Required', 'System is not initialized. Please double-tap "Master Control" and click "Forgot Password?" below to set up Master Credentials.', 'warning');
+            return;
+        }
+
+        const pinRaw = document.getElementById('aLoginPin').value;
+        const pinHash = hashData(pinRaw);
+
+        if(pinHash === masterCredentials.pin || pinRaw === masterCredentials.pin) {
+            resetAttempts(); 
+            document.getElementById('admin2FASection').classList.add('hidden');
+            document.getElementById('aPinError').classList.add('hidden');
+            document.getElementById('adminAuthSection').classList.remove('hidden');
+            document.getElementById('aLoginPin').value = ''; 
+        } else {
+            let attemptsLeft = handleFailedAttempt(); 
+            const errBox = document.getElementById('aPinError');
+            let errMsg = "Invalid PIN Code";
+            if (attemptsLeft <= 5 && attemptsLeft > 0) {
+                errMsg += `<br><span style="font-size: 0.85rem; margin-top:5px; display:block; color: #ef4444;">⚠️ Warning: Only ${attemptsLeft} attempt(s) left before lockout.</span>`;
+            }
+            errBox.innerHTML = errMsg;
+            errBox.classList.remove('hidden');
+        }
+    }
+
+    function handleAdminLogin() {
+        if (checkLockout()) return; 
+        if (!masterCredentials) return; 
+
+        const u = document.getElementById('aLoginUser').value;
+        const pRaw = document.getElementById('aLoginPass').value; 
+        
+        if(u === masterCredentials.user) {
+            auth.signInWithEmailAndPassword('iamdarsan.ai@gmail.com', pRaw)
+            .then((cred) => {
+                resetAttempts(); 
+                isAdminLoggedIn = true;
+                localSessionId = Date.now().toString();
+                db.ref('iia_fest_data/masterCredentials/sessionId').set(localSessionId);
+
+                loadAllTicketsAndUsers(); 
+                document.getElementById('adminAuthSection').classList.add('hidden');
+                document.getElementById('aLoginError').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.remove('hidden');
+                updateFooterVisibility();
+                syncOfflineScans();
+            })
+            .catch((error) => {
+                let attemptsLeft = handleFailedAttempt(); 
+                const errBox = document.getElementById('aLoginError');
+                let errMsg = "Access Denied: Invalid Password";
+                if (attemptsLeft <= 5 && attemptsLeft > 0) {
+                    errMsg += `<br><span style="font-size: 0.85rem; margin-top:5px; display:block; color: #ef4444;">⚠️ Warning: Only ${attemptsLeft} attempt(s) left before lockout.</span>`;
+                }
+                errBox.innerHTML = errMsg;
+                errBox.classList.remove('hidden');
+            });
+        } else {
+            let attemptsLeft = handleFailedAttempt(); 
+            const errBox = document.getElementById('aLoginError');
+            let errMsg = "Access Denied: Invalid Username";
+            if (attemptsLeft <= 5 && attemptsLeft > 0) {
+                errMsg += `<br><span style="font-size: 0.85rem; margin-top:5px; display:block; color: #ef4444;">⚠️ Warning: Only ${attemptsLeft} attempt(s) left before lockout.</span>`;
+            }
+            errBox.innerHTML = errMsg;
+            errBox.classList.remove('hidden');
+        }
+    }
+
+    function cancelAdminLogin(action) {
+        if(action === 'back') {
+            document.getElementById('adminAuthSection').classList.add('hidden');
+            document.getElementById('admin2FASection').classList.remove('hidden');
+            document.getElementById('aLoginUser').value = '';
+            document.getElementById('aLoginPass').value = '';
+            document.getElementById('aLoginError').classList.add('hidden');
+        } else if (action === 'home') {
+            document.getElementById('aLoginPin').value = '';
+            document.getElementById('aPinError').classList.add('hidden');
+            
+            document.getElementById('masterRecoveryBtn1').classList.add('hidden');
+            document.getElementById('masterRecoveryBtn2').classList.add('hidden');
+            switchView('view-home');
+        }
+    }
+
+    function showMasterReset() {
+        document.getElementById('adminAuthSection').classList.add('hidden');
+        document.getElementById('admin2FASection').classList.add('hidden');
+        document.getElementById('adminResetVerifySection').classList.remove('hidden');
+    }
+
+    function cancelMasterReset() {
+        document.getElementById('adminResetVerifySection').classList.add('hidden');
+        document.getElementById('adminSignupSection').classList.add('hidden');
+        document.getElementById('aRecError').classList.add('hidden');
+        
+        document.getElementById('admin2FASection').classList.remove('hidden');
+        document.getElementById('masterRecoveryBtn1').classList.add('hidden');
+        document.getElementById('masterRecoveryBtn2').classList.add('hidden');
+    }
+
+    function sendMasterRecoveryEmail() {
+        setBtnLoading('btnSendRecLink', true);
+        const masterEmail = "iamdarsan.ai@gmail.com";
+        const actionCodeSettings = { url: window.location.href, handleCodeInApp: true };
+        
+        auth.sendSignInLinkToEmail(masterEmail, actionCodeSettings)
+            .then(() => {
+                setBtnLoading('btnSendRecLink', false, "Send Recovery Link");
+                window.localStorage.setItem('emailForSignIn', masterEmail);
+                Swal.fire('Sent!', 'A secure recovery/setup link has been sent to the registered email address. Please check your inbox and click the link to configure your credentials.', 'success');
+                cancelMasterReset();
+            })
+            .catch((error) => {
+                setBtnLoading('btnSendRecLink', false, "Send Recovery Link");
+                const err = document.getElementById('aRecError');
+                err.innerText = error.message; err.classList.remove('hidden');
+            });
+    }
+
+    function saveNewMasterCredentials() {
+        setBtnLoading('btnSaveMasterCreds', true);
+        const newName = document.getElementById('aNewName').value.trim();
+        const newUser = document.getElementById('aNewUser').value.trim();
+        const newPassRaw = document.getElementById('aNewPass').value.trim();
+        const newPinRaw = document.getElementById('aNewPin').value.trim();
+        const err = document.getElementById('aNewError');
+
+        if (!newName || !newUser || !newPassRaw || newPinRaw.length !== 6 || isNaN(newPinRaw)) {
+            err.innerText = "Please fill all fields correctly. PIN must be a 6-digit number.";
+            err.classList.remove('hidden');
+            setBtnLoading('btnSaveMasterCreds', false, "Save Credentials");
+            return;
+        }
+        
+        err.classList.add('hidden');
+
+        const newCreds = {
+            name: newName,
+            user: newUser,
+            pin: hashData(newPinRaw),
+            pass: "LOCKED_BY_AUTH" 
+        };
+
+        const user = auth.currentUser;
+        if (user) {
+            user.updatePassword(newPassRaw).then(() => {
+                db.ref('iia_fest_data/masterCredentials').set(newCreds)
+                .then(() => {
+                    setBtnLoading('btnSaveMasterCreds', false, "Save Credentials");
+                    Swal.fire('Saved!', 'Master Admin credentials configured and securely encrypted successfully!', 'success');
+                    
+                    document.getElementById('aNewName').value = '';
+                    document.getElementById('aNewUser').value = '';
+                    document.getElementById('aNewPass').value = '';
+                    document.getElementById('aNewPin').value = '';
+                    
+                    document.getElementById('adminSignupSection').classList.add('hidden');
+                    document.getElementById('admin2FASection').classList.remove('hidden');
+                    
+                    document.getElementById('masterRecoveryBtn1').classList.add('hidden');
+                    document.getElementById('masterRecoveryBtn2').classList.add('hidden');
+                    auth.signOut(); 
+                })
+                .catch((error) => {
+                    setBtnLoading('btnSaveMasterCreds', false, "Save Credentials");
+                    err.innerText = "Database Error: " + error.message;
+                    err.classList.remove('hidden');
+                });
+            }).catch(e => {
+                setBtnLoading('btnSaveMasterCreds', false, "Save Credentials");
+                err.innerText = "Auth Error: " + e.message; err.classList.remove('hidden');
+            });
+        }
+    }
+
+    // --- CHANGE MASTER CREDENTIALS INSIDE DASHBOARD (TABBED INTERFACE) ---
+    function showChangeCredsForm() {
+        document.getElementById('masterMenu').classList.add('hidden');
+        document.getElementById('btnFooterChangeCreds').classList.add('hidden');
+        document.getElementById('btnMasterLogout').classList.add('hidden');
+        document.getElementById('adminChangeCredsSection').classList.remove('hidden');
+        
+        document.querySelectorAll('.cred-form input').forEach(inp => inp.value = '');
+        switchCredTab('user');
+    }
+
+    function hideChangeCredsForm() {
+        document.getElementById('adminChangeCredsSection').classList.add('hidden');
+        document.getElementById('masterMenu').classList.remove('hidden');
+        document.getElementById('btnMasterLogout').classList.remove('hidden');
+        updateFooterVisibility();
+    }
+
+    function switchCredTab(tab) {
+        document.querySelectorAll('.cred-form').forEach(el => el.classList.add('hidden'));
+        document.getElementById('tab-user').classList.remove('tab-active');
+        document.getElementById('tab-pass').classList.remove('tab-active');
+        document.getElementById('tab-pin').classList.remove('tab-active');
+        
+        document.getElementById('form-change-' + tab).classList.remove('hidden');
+        document.getElementById('tab-' + tab).classList.add('tab-active');
+        document.getElementById('cCredsError').classList.add('hidden');
+        document.getElementById('cCredsSuccess').classList.add('hidden');
+    }
+
+    function showCredError(msg, btnId, defaultText) {
+        if(btnId) setBtnLoading(btnId, false, defaultText);
+        const err = document.getElementById('cCredsError');
+        err.innerText = msg; err.classList.remove('hidden');
+        document.getElementById('cCredsSuccess').classList.add('hidden');
+    }
+
+    function saveCredsToDB(successMsg, btnId, defaultText) {
+        document.getElementById('cCredsError').classList.add('hidden');
+        db.ref('iia_fest_data/masterCredentials').set(masterCredentials)
+        .then(() => {
+            if(btnId) setBtnLoading(btnId, false, defaultText);
+            const suc = document.getElementById('cCredsSuccess');
+            suc.innerText = "✅ " + successMsg; 
+            suc.classList.remove('hidden');
+            document.querySelectorAll('.cred-form input').forEach(inp => inp.value = ''); 
+        })
+        .catch((error) => showCredError("Database Error: " + error.message, btnId, defaultText));
+    }
+
+    function updateMasterUsername() {
+        setBtnLoading('btnUpdateUser', true);
+        const oldUser = document.getElementById('cOldUser').value.trim();
+        const pass = document.getElementById('cPassForUser').value; 
+        const pin = document.getElementById('cPinForUser').value;
+        const newUser = document.getElementById('cNewUser').value.trim();
+        
+        if(oldUser !== masterCredentials.user || hashData(pin) !== masterCredentials.pin) {
+            showCredError("❌ Current credentials incorrect. Change blocked.", 'btnUpdateUser', 'Update Username'); return;
+        }
+        if(!newUser) { showCredError("❌ Please enter a new username.", 'btnUpdateUser', 'Update Username'); return; }
+        
+        auth.signInWithEmailAndPassword('iamdarsan.ai@gmail.com', pass).then(() => {
+            masterCredentials.user = newUser;
+            saveCredsToDB("Username updated securely.", 'btnUpdateUser', 'Update Username');
+        }).catch(() => {
+            showCredError("❌ Current password incorrect. Change blocked.", 'btnUpdateUser', 'Update Username');
+        });
+    }
+
+    function updateMasterPassword() {
+        setBtnLoading('btnUpdatePass', true);
+        const oldPass = document.getElementById('cOldPass').value;
+        const newPass = document.getElementById('cNewPass').value;
+        const confirmPass = document.getElementById('cNewPassConfirm').value;
+        
+        if(!newPass || newPass !== confirmPass) { showCredError("❌ New passwords do not match or are empty.", 'btnUpdatePass', 'Update Password'); return; }
+        
+        auth.signInWithEmailAndPassword('iamdarsan.ai@gmail.com', oldPass).then((cred) => {
+            cred.user.updatePassword(newPass).then(() => {
+                if(btnId) setBtnLoading('btnUpdatePass', false, 'Update Password');
+                const suc = document.getElementById('cCredsSuccess');
+                suc.innerText = "✅ Password updated securely in Firebase Auth."; 
+                suc.classList.remove('hidden');
+                document.querySelectorAll('.cred-form input').forEach(inp => inp.value = ''); 
+            }).catch(e => showCredError("❌ " + e.message, 'btnUpdatePass', 'Update Password'));
+        }).catch(() => {
+            showCredError("❌ Current password incorrect. Change blocked.", 'btnUpdatePass', 'Update Password');
+        });
+    }
+
+    function updateMasterPin() {
+        setBtnLoading('btnUpdatePin', true);
+        const pass = document.getElementById('cPassForPin').value;
+        const oldPin = document.getElementById('cOldPin').value;
+        const newPin = document.getElementById('cNewPin').value;
+        
+        if(hashData(oldPin) !== masterCredentials.pin) {
+            showCredError("❌ Current PIN incorrect. Change blocked.", 'btnUpdatePin', 'Update 2-Step PIN'); return;
+        }
+        if(!newPin || newPin.length !== 6 || isNaN(newPin)) { showCredError("❌ New PIN must be exactly 6 digits.", 'btnUpdatePin', 'Update 2-Step PIN'); return; }
+        
+        auth.signInWithEmailAndPassword('iamdarsan.ai@gmail.com', pass).then(() => {
+            masterCredentials.pin = hashData(newPin);
+            saveCredsToDB("2-Step PIN updated securely.", 'btnUpdatePin', 'Update 2-Step PIN');
+        }).catch(() => {
+            showCredError("❌ Current password incorrect. Change blocked.", 'btnUpdatePin', 'Update 2-Step PIN');
+        });
+    }
+
+    // --- UI UPDATES & EXPORTS ---
+    function updateAdminUI() {
+        if(!isAdminLoggedIn) return;
+        
+        let pendingStaff = staffMembers.filter(s => s.status === 'Pending').length;
+        let approvedStaff = staffMembers.filter(s => s.status === 'Approved').length;
+        let pendingStudents = tickets.filter(t => t.status === 'Pending').length;
+        let approvedStudents = tickets.filter(t => t.status === 'Approved').length;
+        let presentStudents = tickets.filter(t => t.status === 'Used').length;
+
+        document.getElementById('badge-master-pendAdmin').innerText = pendingStaff;
+        document.getElementById('badge-master-appAdmin').innerText = approvedStaff;
+        document.getElementById('badge-master-pendStudent').innerText = pendingStudents;
+        document.getElementById('badge-master-appStudent').innerText = approvedStudents;
+        document.getElementById('badge-master-present').innerText = presentStudents;
+
+        const badgeElem = document.getElementById('badge-master-pendStudent');
+        if (pendingStudents > 2) {
+            badgeElem.classList.add('badge-alert');
+            if (pendingStudents > prevMasterPendingCount) {
+                Swal.fire({
+                    title: 'Smart Notification Alert 🔔',
+                    text: `${pendingStudents} students are waiting for pass approval!`,
+                    icon: 'info',
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 5000,
+                    timerProgressBar: true
+                });
+            }
+        } else {
+            badgeElem.classList.remove('badge-alert');
+        }
+        prevMasterPendingCount = pendingStudents;
+        
+        const pendingAdminsDiv = document.getElementById('adminStaffApprovalList');
+        const pendAdmins = staffMembers.filter(s => s.status === 'Pending');
+        if(pendAdmins.length > 0) {
+            let html = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 8px;">
+                <label style="cursor:pointer; display:flex; align-items:center; gap:8px; font-weight:bold; color:var(--text-main); font-size: 0.9rem;">
+                    <input type="checkbox" onclick="toggleAllBulk(this, 'adminStaffApprovalList')"> Select All
+                </label>
+                <button class="approve-btn" onclick="bulkApproveAdmins('adminStaffApprovalList')" style="margin:0; background-color: var(--visitor-color);">Bulk Approve</button>
+            </div>`;
+            
+            html += pendAdmins.map((s, index) => {
+                const isHidden = index >= 20 ? 'style="display: none;"' : '';
+                return `
+                <div class="list-item infinite-item" ${isHidden}>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <input type="checkbox" class="bulk-cb-adminStaffApprovalList" value="${s.uid}">
+                        <div><strong style="color: var(--text-main);">${s.name}</strong><br><small style="color:var(--text-muted)">${s.email}</small></div>
+                    </div>
+                    <button class="approve-btn" onclick="approveAdmin('${s.uid}')">Approve Admin</button>
+                </div>`;
+            }).join('');
+            if(pendAdmins.length > 20) html += `<div class="load-more-trigger" style="text-align:center; padding: 15px; color: var(--visitor-color); cursor:pointer; font-weight:bold; font-size: 0.9rem;" onclick="loadMoreListItems(this)">⏬ Load More</div>`;
+            pendingAdminsDiv.innerHTML = html;
+        } else {
+            pendingAdminsDiv.innerHTML = '<span style="color: var(--text-muted);">No pending admin registrations.</span>';
+        }
+
+        const staffListDiv = document.getElementById('adminStaffList');
+        const appAdmins = staffMembers.filter(s => s.status === 'Approved');
+        if(appAdmins.length > 0) {
+            let html = appAdmins.map((s, index) => {
+                const isHidden = index >= 20 ? 'style="display: none;"' : '';
+                return `
+                <div class="list-item infinite-item" ${isHidden}>
+                    <div><strong style="color: var(--text-main);">${s.name}</strong><br><small style="color:var(--text-muted)">${s.email}</small></div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
+                        <span class="status-badge bg-success" style="font-size:0.7rem">Active</span>
+                        <button class="remove-btn" style="padding: 4px 8px; font-size: 0.75rem;" onclick="deleteApprovedAdmin('${s.uid}')">Delete</button>
+                    </div>
+                </div>`;
+            }).join('');
+            if(appAdmins.length > 20) html += `<div class="load-more-trigger" style="text-align:center; padding: 15px; color: var(--visitor-color); cursor:pointer; font-weight:bold; font-size: 0.9rem;" onclick="loadMoreListItems(this)">⏬ Load More</div>`;
+            staffListDiv.innerHTML = html;
+        } else {
+            staffListDiv.innerHTML = '<span style="color: var(--text-muted);">No approved admins yet.</span>';
+        }
+
+        const presentListDiv = document.getElementById('adminPresentList');
+        const presentTickets = tickets.filter(t => t.status === 'Used');
+        if(presentTickets.length > 0) {
+            let html = presentTickets.map((t, index) => {
+                const isHidden = index >= 20 ? 'style="display: none;"' : '';
+                return `
+                <div class="list-item infinite-item" ${isHidden}>
+                    <div>
+                        <strong style="color: var(--text-main);">${t.name}</strong> 
+                        <span class="scanned-by-text">(Scanned by: ${t.scannedBy} at ${t.scanTime || 'N/A'})</span><br>
+                        <small style="color:var(--text-muted)">${t.email} | Food: ${t.foodPreference || 'N/A'}</small>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
+                        <span class="status-badge" style="background:var(--border-color); color:var(--text-main); font-size:0.7rem">In Venue</span>
+                        <button class="remove-btn" style="padding: 4px 8px; font-size: 0.75rem;" onclick="deleteInVenueRecord('${t.id}')">Delete</button>
+                    </div>
+                </div>`;
+            }).join('');
+            if(presentTickets.length > 20) html += `<div class="load-more-trigger" style="text-align:center; padding: 15px; color: var(--visitor-color); cursor:pointer; font-weight:bold; font-size: 0.9rem;" onclick="loadMoreListItems(this)">⏬ Load More</div>`;
+            presentListDiv.innerHTML = html;
+        } else {
+            presentListDiv.innerHTML = '<span style="color: var(--text-muted);">No students have entered yet.</span>';
+        }
+
+        renderTicketLists('adminPendingList', 'adminApprovedList');
+        reFilterAll();
+        applyInfiniteScroll();
+    }
+
+    function approveAdmin(uid) {
+        db.ref('iia_fest_data/users/' + uid + '/status').set('Approved')
+        .then(() => {
+            Swal.fire({
+                title: 'Admin Approved!',
+                icon: 'success',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        })
+        .catch(e => Swal.fire('Error', 'Action Blocked: ' + e.message, 'error'));
+    }
+    
+    function deleteApprovedAdmin(uid) {
+        Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Type "yes" to permanently delete this admin:',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+        }).then((result) => {
+            if (result.value === "yes") {
+                db.ref('iia_fest_data/users/' + uid).remove().then(() => Swal.fire('Deleted!', 'Admin deleted successfully.', 'success'));
+            }
+        });
+    }
+
+    function deleteInVenueRecord(id) {
+        Swal.fire({
+            title: 'Confirm Deletion',
+            text: 'Type "yes" to permanently delete this record:',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+        }).then((result) => {
+            if (result.value === "yes") {
+                db.ref('iia_fest_data/tickets/' + id).remove().then(() => Swal.fire('Deleted!', 'Record deleted successfully.', 'success'));
+            }
+        });
+    }
+
+    // --- BULK ACTION LOGIC ---
+    function toggleAllBulk(source, containerId) {
+        const checkboxes = document.querySelectorAll('.bulk-cb-' + containerId);
+        checkboxes.forEach(cb => {
+            if (cb.closest('.list-item').style.display !== 'none') {
+                cb.checked = source.checked;
+            }
+        });
+    }
+
+    function bulkApprove(containerId) {
+        const checkboxes = document.querySelectorAll('.bulk-cb-' + containerId + ':checked');
+        if(checkboxes.length === 0) {
+            Swal.fire('No Selection', 'Please select at least one student to approve.', 'warning');
+            return;
+        }
+        
+        Swal.fire({
+            title: 'Approving...',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+        
+        let updates = {};
+        checkboxes.forEach(cb => {
+            updates['iia_fest_data/tickets/' + cb.value + '/status'] = 'Approved';
+        });
+        
+        db.ref().update(updates).then(() => {
+            checkboxes.forEach(cb => {
+                let t = tickets.find(ticket => ticket.id === cb.value);
+                if (t) sendEmailNotification(t.email, t.name, t.id);
+            });
+
+            Swal.fire('Success!', checkboxes.length + ' passes approved successfully!', 'success');
+        }).catch(e => {
+            Swal.fire('Error', e.message, 'error');
+        });
+    }
+    
+    function bulkApproveAdmins(containerId) {
+        const checkboxes = document.querySelectorAll('.bulk-cb-' + containerId + ':checked');
+        if(checkboxes.length === 0) {
+            Swal.fire('No Selection', 'Please select at least one admin to approve.', 'warning');
+            return;
+        }
+        
+        Swal.fire({
+            title: 'Approving...',
+            allowOutsideClick: false,
+            didOpen: () => { Swal.showLoading(); }
+        });
+        
+        let updates = {};
+        checkboxes.forEach(cb => {
+            updates['iia_fest_data/users/' + cb.value + '/status'] = 'Approved';
+        });
+        
+        db.ref().update(updates).then(() => {
+            Swal.fire('Success!', checkboxes.length + ' admins approved successfully!', 'success');
+        }).catch(e => {
+            Swal.fire('Error', e.message, 'error');
+        });
+    }
+
+    function renderTicketLists(pendingContainerId, approvedContainerId) {
+        const pList = document.getElementById(pendingContainerId);
+        const pendT = tickets.filter(t => t.status === 'Pending');
+        if(pendT.length > 0) {
+            let html = `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 8px;">
+                <label style="cursor:pointer; display:flex; align-items:center; gap:8px; font-weight:bold; color:var(--text-main); font-size: 0.9rem;">
+                    <input type="checkbox" onclick="toggleAllBulk(this, '${pendingContainerId}')"> Select All
+                </label>
+                <button class="approve-btn" onclick="bulkApprove('${pendingContainerId}')" style="margin:0; background-color: var(--visitor-color);">Bulk Approve</button>
+            </div>`;
+            
+            html += pendT.map((t, index) => {
+                const isHidden = index >= 20 ? 'style="display: none;"' : '';
+                return `
+                <div class="list-item infinite-item" ${isHidden}>
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <input type="checkbox" class="bulk-cb-${pendingContainerId}" value="${t.id}">
+                        <div><strong style="color: var(--text-main);">${t.name}</strong><br><small style="color:var(--text-muted)">${t.email} | Food: ${t.foodPreference || 'N/A'}</small></div>
+                    </div>
+                    <button class="approve-btn" onclick="ticketAction('${t.id}', 'Approved')">Approve</button>
+                </div>`;
+            }).join('');
+            if(pendT.length > 20) html += `<div class="load-more-trigger" style="text-align:center; padding: 15px; color: var(--visitor-color); cursor:pointer; font-weight:bold; font-size: 0.9rem;" onclick="loadMoreListItems(this)">⏬ Load More</div>`;
+            pList.innerHTML = html;
+        } else {
+            pList.innerHTML = '<span style="color: var(--text-muted);">Queue is empty.</span>';
+        }
+
+        const aList = document.getElementById(approvedContainerId);
+        const appT = tickets.filter(t => t.status === 'Approved');
+        if(appT.length > 0) {
+            let html = appT.map((t, index) => {
+                const isHidden = index >= 20 ? 'style="display: none;"' : '';
+                return `
+                <div class="list-item infinite-item" ${isHidden}>
+                    <div><strong style="color: var(--text-main);">${t.name}</strong><br><small style="color:var(--text-muted)">ID: ${t.id} | Food: ${t.foodPreference || 'N/A'}</small></div>
+                    <button class="remove-btn" onclick="ticketAction('${t.id}', 'Revoked')">Remove</button>
+                </div>`;
+            }).join('');
+            if(appT.length > 20) html += `<div class="load-more-trigger" style="text-align:center; padding: 15px; color: var(--visitor-color); cursor:pointer; font-weight:bold; font-size: 0.9rem;" onclick="loadMoreListItems(this)">⏬ Load More</div>`;
+            aList.innerHTML = html;
+        } else {
+            aList.innerHTML = '<span style="color: var(--text-muted);">No active passes.</span>';
+        }
+    }
+
+    // Direct Object Write (Fixes Live Update)
+    function ticketAction(id, action) {
+        db.ref('iia_fest_data/tickets/' + id + '/status').set(action)
+        .then(() => {
+            
+            if (action === 'Approved') {
+                let t = tickets.find(ticket => ticket.id === id);
+                if (t) sendEmailNotification(t.email, t.name, t.id);
+            }
+
+            Swal.fire({
+                title: 'Success!',
+                text: 'Pass has been ' + action + '!',
+                icon: 'success',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        })
+        .catch((e) => {
+            Swal.fire('Action Blocked', 'Database Error: ' + e.message + '\n\nPlease update Firebase Database Rules.', 'error');
+        });
+    }
+
+    function downloadPDF() {
+        const { jsPDF } = window.jspdf; const doc = new jsPDF();
+        doc.setFontSize(18); doc.text("TEACHERS DAY 2K26 - Master Event Report", 14, 20); doc.setFontSize(12);
+        
+        doc.text("1. Present in Venue (Scanned & Verified)", 14, 30);
+        const presentData = tickets.filter(t => t.status === 'Used').map(t => [t.name, t.foodPreference || 'N/A', t.id, t.scannedBy || 'Master', t.scanTime || 'N/A']);
+        doc.autoTable({ startY: 35, head: [['Name', 'Food Pref', 'Pass ID', 'Verified By', 'Time']], body: presentData });
+        
+        let finalY = doc.lastAutoTable.finalY || 35;
+        doc.text("2. Active / Approved Passes (Not Scanned Yet)", 14, finalY + 15);
+        const activeData = tickets.filter(t => t.status === 'Approved').map(t => [t.name, t.foodPreference || 'N/A', t.email, t.id]);
+        doc.autoTable({ startY: finalY + 20, head: [['Student Name', 'Food Pref', 'Email', 'Pass ID']], body: activeData });
+        
+        finalY = doc.lastAutoTable.finalY || finalY + 20;
+        doc.text("3. Authorized Admins", 14, finalY + 15);
+        const adminData = staffMembers.filter(s => s.status === 'Approved').map(s => [s.name, s.email]);
+        doc.autoTable({ startY: finalY + 20, head: [['Admin Name', 'Email']], body: adminData });
+        
+        doc.save("TEACHERS_DAY_2K26_Event_Report.pdf");
+    }
+
+    function downloadCSV() {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "TEACHERS DAY 2K26 - Master Event Report\n\n";
+        
+        csvContent += "1. Present in Venue (Scanned & Verified)\n";
+        csvContent += "Student Name,Email,Food Preference,Pass ID,Verified By,Scan Time\n";
+        tickets.filter(t => t.status === 'Used').forEach(t => {
+            csvContent += `"${t.name}","${t.email}","${t.foodPreference || 'N/A'}","${t.id}","${t.scannedBy || 'Master'}","${t.scanTime || 'N/A'}"\n`;
+        });
+        
+        csvContent += "\n2. Active / Approved Passes (Not Scanned Yet)\n";
+        csvContent += "Student Name,Email,Food Preference,Pass ID\n";
+        tickets.filter(t => t.status === 'Approved').forEach(t => {
+            csvContent += `"${t.name}","${t.email}","${t.foodPreference || 'N/A'}","${t.id}"\n`;
+        });
+        
+        csvContent += "\n3. Authorized Admins\n";
+        csvContent += "Admin Name,Email\n";
+        staffMembers.filter(s => s.status === 'Approved').forEach(s => {
+            csvContent += `"${s.name}","${s.email}"\n`;
+        });
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "TEACHERS_DAY_2K26_Event_Report.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    let html5QrCode;
+    function startCamera(readerElementId, resultElementId) {
+        if(html5QrCode) { html5QrCode.stop().then(() => { html5QrCode.clear(); }).catch(err => console.log(err)); }
+        document.getElementById(resultElementId).classList.add('hidden');
+        html5QrCode = new Html5Qrcode(readerElementId);
+        
+        html5QrCode.start({ facingMode: "environment" }, { fps: 5, qrbox: { width: 250, height: 250 } }, 
+        (decodedText) => {
+            html5QrCode.stop();
+            document.getElementById(readerElementId).innerHTML = '<div style="color:#10b981; padding:40px 0; font-size:1.5rem; font-weight:bold; text-align:center;">✅ QR Detected! Processing...</div>';
+            processScan(decodedText, resultElementId);
+        }, 
+        (errorMessage) => {}).catch(err => {
+            document.getElementById(resultElementId).innerText = "Camera access denied. Ensure you are on a secure (HTTPS) connection or use manual entry.";
+            document.getElementById(resultElementId).classList.remove('hidden'); document.getElementById(resultElementId).classList.add('msg-error');
+        });
+    }
+
+    function processScan(decodedText, resultId) {
+        const id = decodedText.trim();
+        const res = document.getElementById(resultId);
+        res.classList.remove('hidden', 'msg-success', 'msg-error');
+        if(!id) { res.innerText = "❌ Please enter a valid Pass ID"; res.classList.add('msg-error'); return; }
+
+        let t = tickets.find(t => t.id === id);
+
+        if(!t || t.status === 'Pending' || t.status === 'Revoked') {
+            res.innerText = "❌ Pass Not Found or Unauthorized"; res.classList.add('msg-error');
+        } else if (t.status === 'Used') {
+            res.innerText = `⚠️ Alert: Pass Already Used! (${t.name})`; res.classList.add('msg-error');
+        } else if (t.status === 'Approved') {
+            const scannedBy = isAdminLoggedIn ? 'Master Admin' : (currentStaff ? currentStaff.name : 'System');
+            const timestamp = new Date().toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' });
+            
+            if (navigator.onLine) {
+                db.ref('iia_fest_data/tickets/' + t.id).update({ status: 'Used', scannedBy: scannedBy, scanTime: timestamp })
+                .then(() => {
+                    res.innerHTML = `✅ VERIFIED<br><small>Entry granted for: ${t.name}</small>`; 
+                    res.classList.add('msg-success');
+                })
+                .catch(e => {
+                    res.innerText = "❌ DB Error: " + e.message; 
+                    res.classList.add('msg-error');
+                });
+            } else {
+                // OFFLINE MODE PROCESSING
+                offlineScans.push({ id: t.id, scannedBy: scannedBy + ' (Offline)', scanTime: timestamp });
+                localStorage.setItem('offlineScans', JSON.stringify(offlineScans));
+                
+                // Update local array immediately to reflect in UI
+                t.status = 'Used';
+                t.scannedBy = scannedBy + ' (Offline)';
+                t.scanTime = timestamp;
+                updateAdminUI(); // Trigger UI update
+                
+                res.innerHTML = `✅ VERIFIED (OFFLINE)<br><small>Entry granted for: ${t.name}. Will sync when online.</small>`; 
+                res.classList.add('msg-success');
+                
+                Swal.fire({
+                    title: 'Offline Scan Saved',
+                    text: `${t.name} recorded locally.`,
+                    icon: 'success',
+                    toast: true, position: 'top-end', showConfirmButton: false, timer: 2000
+                });
+            }
+        }
+    }
+</script>
+
+<!-- === ANTI-INSPECT SECURITY SCRIPT === -->
+<script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
+        if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) { e.preventDefault(); return false; }
+        if (e.metaKey && e.altKey && ['I','i','J','j','C','c'].includes(e.key)) { e.preventDefault(); return false; }
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'U' || e.key === 'u')) { e.preventDefault(); return false; }
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'S' || e.key === 's')) { e.preventDefault(); return false; }
     });
 </script>
 </body>
