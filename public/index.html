@@ -183,13 +183,15 @@
 <script>
     // 1. Initialize Firebase (আপনার প্রোজেক্টের ডিটেইলস)
     const firebaseConfig = {
-      apiKey: "AIzaSyAvtM_LmkN4oXlQ7_wojG8CunUuw6lbt7Y",
-      authDomain: "iia-fest.firebaseapp.com",
-      projectId: "iia-fest",
-      storageBucket: "iia-fest.firebasestorage.app",
-      messagingSenderId: "111712260847",
-      appId: "1:111712260847:web:667572c9309a011b02811a"
-    };
+  apiKey: "AIzaSyAvtM_LmkN4oXlQ7_wojG8CunUuw6lbt7Y",
+  authDomain: "iia-fest.firebaseapp.com",
+  databaseURL: "https://iia-fest-default-rtdb.firebaseio.com",
+  projectId: "iia-fest",
+  storageBucket: "iia-fest.firebasestorage.app",
+  messagingSenderId: "111712260847",
+  appId: "1:111712260847:web:667572c9309a011b02811a",
+  measurementId: "G-M1SHTJ5LF1"
+};
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
 
